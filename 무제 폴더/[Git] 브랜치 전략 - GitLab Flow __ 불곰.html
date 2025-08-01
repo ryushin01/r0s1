@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://brownbears.tistory.com/605 -->
+<html lang="ko" data-phocus-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                <script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/f(5).txt"></script><script type="text/javascript" async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/analytics.js"></script><script type="text/javascript" async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/js"></script><script type="text/javascript">if (!window.T) { window.T = {} }
+window.T.config = {"TOP_SSL_URL":"https://www.tistory.com","PREVIEW":false,"ROLE":"guest","PREV_PAGE":"","NEXT_PAGE":"","BLOG":{"id":1954575,"name":"brownbears","title":"불곰","isDormancy":false,"nickName":"불곰1","status":"open","profileStatus":"normal"},"NEED_COMMENT_LOGIN":false,"COMMENT_LOGIN_CONFIRM_MESSAGE":"","LOGIN_URL":"https://www.tistory.com/auth/login/?redirectUrl=https://brownbears.tistory.com/605","DEFAULT_URL":"https://brownbears.tistory.com","USER":{"name":null,"homepage":null,"id":0,"profileImage":null},"SUBSCRIPTION":{"status":"none","isConnected":false,"isPending":false,"isWait":false,"isProcessing":false,"isNone":true},"IS_LOGIN":false,"HAS_BLOG":false,"IS_SUPPORT":false,"IS_SCRAPABLE":false,"TOP_URL":"http://www.tistory.com","JOIN_URL":"https://www.tistory.com/member/join","PHASE":"prod","ROLE_GROUP":"visitor"};
+window.T.entryInfo = {"entryId":605,"isAuthor":false,"categoryId":186238,"categoryLabel":"저장소/git"};
+window.appInfo = {"domain":"tistory.com","topUrl":"https://www.tistory.com","loginUrl":"https://www.tistory.com/auth/login","logoutUrl":"https://www.tistory.com/auth/logout"};
+window.initData = {};
+
+window.TistoryBlog = {
+    basePath: "",
+    url: "https://brownbears.tistory.com",
+    tistoryUrl: "https://brownbears.tistory.com",
+    manageUrl: "https://brownbears.tistory.com/manage",
+    token: "UiJ97EKtt0ZJBw+dLpoBK5Z9iyblu/yGeAVmnppV4Jym+vG/bHLtmTB7rqsGP9I9"
+};
+var servicePath = "";
+var blogURL = "";</script>
+
+                
+                
+                        <!-- BusinessLicenseInfo - START -->
+        
+            <link href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/style.css" rel="stylesheet" type="text/css">
+
+            <script>function switchFold(entryId) {
+    var businessLayer = document.getElementById("businessInfoLayer_" + entryId);
+
+    if (businessLayer) {
+        if (businessLayer.className.indexOf("unfold_license") > 0) {
+            businessLayer.className = "business_license_layer";
+        } else {
+            businessLayer.className = "business_license_layer unfold_license";
+        }
+    }
+}
+</script>
+
+        
+        <!-- BusinessLicenseInfo - END -->
+        <!-- GoogleAnalytics - START -->
+        <script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/js(1)" async="async"></script>
+<script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config','UA-132311436-1', {
+    cookie_domain: 'auto',
+    cookie_flags: 'max-age=0;domain=.tistory.com',
+    cookie_expires: 7 * 24 * 60 * 60 // 7 days, in seconds
+});</script>
+
+        <!-- GoogleAnalytics - END -->
+
+<!-- System - START -->
+
+<!-- System - END -->
+
+        <!-- GoogleSearchConsole - START -->
+        
+<!-- BEGIN GOOGLE_SITE_VERIFICATION -->
+<meta name="google-site-verification" content="jnEjTrXb5KpmJB4hKc0QfExXlyHHPQrAd-L-c12zwek">
+<!-- END GOOGLE_SITE_VERIFICATION -->
+
+        <!-- GoogleSearchConsole - END -->
+
+        <!-- TistoryProfileLayer - START -->
+        <link href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/style(1).css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/script.js"></script>
+
+        <!-- TistoryProfileLayer - END -->
+
+                
+                <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="format-detection" content="telephone=no">
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/tiara.min.js"></script><meta name="referrer" content="always">
+<meta name="google-adsense-platform-account" content="ca-host-pub-9691043933427338">
+<meta name="google-adsense-platform-domain" content="tistory.com">
+<meta name="google-adsense-account" content="ca-pub-7830004216974778">
+<meta name="description" content="Github flow는 너무 간단해서 배포, 릴리즈 등의 조금 복잡한 이슈를 보완하기 위해 나온 전략입니다. Gitlab flow의 브랜치는 아래와 같이 사용을 합니다. 브랜치 설명 feature 모든 기능 구현은 feature 브랜치에서 시작합니다. feature 브랜치는 master 브랜치에서 분기되고 머지됩니다. master gitlab flow의 master 브랜치 역할은 git flow의 develop 브랜치와 동일합니다. master 브랜치는 feature 브랜치에서 병합된 기능에 대해 test를 진행합니다. 전체적인 테스트가 진행되어 기능에 대한 보장이 되었다면 production 브랜치로 머지합니다. 만약 staging 단계를 원한다면 pre-production 브랜치로 머지를 진행합니다...">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://brownbears.tistory.com/605">
+<meta property="og.article.author" content="불곰1">
+<meta property="og:site_name" content="불곰">
+<meta property="og:title" content="[Git] 브랜치 전략 - GitLab Flow">
+<meta name="by" content="불곰1">
+<meta property="og:description" content="Github flow는 너무 간단해서 배포, 릴리즈 등의 조금 복잡한 이슈를 보완하기 위해 나온 전략입니다. Gitlab flow의 브랜치는 아래와 같이 사용을 합니다. 브랜치 설명 feature 모든 기능 구현은 feature 브랜치에서 시작합니다. feature 브랜치는 master 브랜치에서 분기되고 머지됩니다. master gitlab flow의 master 브랜치 역할은 git flow의 develop 브랜치와 동일합니다. master 브랜치는 feature 브랜치에서 병합된 기능에 대해 test를 진행합니다. 전체적인 테스트가 진행되어 기능에 대한 보장이 되었다면 production 브랜치로 머지합니다. 만약 staging 단계를 원한다면 pre-production 브랜치로 머지를 진행합니다...">
+<meta property="og:image" content="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcpFS3u%2FbtrswUeKUIu%2FAAAAAAAAAAAAAAAAAAAAAHMRzotwMRncyws0ZzQWWJrO-ImVO7ukZ9krbWfoFhxX%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3D0KQNnE1lliQuyFzBUeyHpTXItRg%253D">
+<meta property="article:section" content="&#39;IT 인터넷&#39;">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@TISTORY">
+<meta name="twitter:title" content="[Git] 브랜치 전략 - GitLab Flow">
+<meta name="twitter:description" content="Github flow는 너무 간단해서 배포, 릴리즈 등의 조금 복잡한 이슈를 보완하기 위해 나온 전략입니다. Gitlab flow의 브랜치는 아래와 같이 사용을 합니다. 브랜치 설명 feature 모든 기능 구현은 feature 브랜치에서 시작합니다. feature 브랜치는 master 브랜치에서 분기되고 머지됩니다. master gitlab flow의 master 브랜치 역할은 git flow의 develop 브랜치와 동일합니다. master 브랜치는 feature 브랜치에서 병합된 기능에 대해 test를 진행합니다. 전체적인 테스트가 진행되어 기능에 대한 보장이 되었다면 production 브랜치로 머지합니다. 만약 staging 단계를 원한다면 pre-production 브랜치로 머지를 진행합니다...">
+<meta property="twitter:image" content="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcpFS3u%2FbtrswUeKUIu%2FAAAAAAAAAAAAAAAAAAAAAHMRzotwMRncyws0ZzQWWJrO-ImVO7ukZ9krbWfoFhxX%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3D0KQNnE1lliQuyFzBUeyHpTXItRg%253D">
+<meta content="https://brownbears.tistory.com/605" property="dg:plink">
+<meta name="plink">
+<meta name="title" content="[Git] 브랜치 전략 - GitLab Flow">
+<meta name="article:media_name" content="불곰">
+<meta property="article:mobile_url" content="https://brownbears.tistory.com/m/605">
+<meta property="article:pc_url" content="https://brownbears.tistory.com/605">
+<meta property="article:mobile_view_url" content="https://brownbears.tistory.com/m/605">
+<meta property="article:pc_view_url" content="https://brownbears.tistory.com/605">
+<meta property="article:talk_channel_view_url" content="https://brownbears.tistory.com/m/605">
+<meta property="article:pc_service_home" content="https://www.tistory.com">
+<meta property="article:mobile_service_home" content="https://www.tistory.com/m">
+<meta property="article:txid" content="1954575_605">
+<meta property="article:published_time" content="2022-02-05T18:50:53+09:00">
+<meta property="og:regDate" content="20220205065053">
+<meta property="article:modified_time" content="2022-02-05T18:50:53+09:00">
+<script type="module" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/index.js" defer=""></script>
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/index-legacy.js" defer="" nomodule="true"></script>
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/polyfills-legacy.js" defer="" nomodule="true"></script>
+<link rel="icon" sizes="any" href="https://t1.daumcdn.net/tistory_admin/favicon/tistory_favicon_32x32.ico">
+<link rel="icon" type="image/svg+xml" href="https://t1.daumcdn.net/tistory_admin/top_v2/bi-tistory-favicon.svg">
+<link rel="apple-touch-icon" href="https://t1.daumcdn.net/tistory_admin/top_v2/tistory-apple-touch-favicon.png">
+<link rel="stylesheet" type="text/css" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/font.css">
+<link rel="stylesheet" type="text/css" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/content.css">
+<link rel="stylesheet" type="text/css" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/index.css">
+<script type="text/javascript">(function() {
+    var tjQuery = jQuery.noConflict(true);
+    window.tjQuery = tjQuery;
+    window.orgjQuery = window.jQuery; window.jQuery = tjQuery;
+    window.jQuery = window.orgjQuery; delete window.orgjQuery;
+})()</script>
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/base.js"></script>
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/kakao.min.js"></script>
+
+                
+    <title>[Git] 브랜치 전략 - GitLab Flow :: 불곰</title>
+    <meta name="title" content="[Git] 브랜치 전략 - GitLab Flow :: 불곰">
+    <meta name="description" content="이것저것">
+    
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+
+    <link rel="alternate" type="application/rss+xml" title="불곰" href="https://brownbears.tistory.com/rss">
+    <link rel="shortcut icon" href="https://brownbears.tistory.com/favicon.ico">
+
+    <link rel="stylesheet" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/style(2).css">
+    <link rel="stylesheet" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/style_webicon.css">
+
+    <script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/jquery.js"></script>
+    <script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/common.js"></script>
+	
+	<!-- 자동광고 게재 - 있어야 전체 유저에게 적용되는 것으로 보임 -->
+
+	<script async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/f(6).txt" crossorigin="anonymous" data-checked-head="true"></script>
+
+
+                
+                
+                <link rel="stylesheet" type="text/css" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/revenue.css">
+<link rel="canonical" href="https://brownbears.tistory.com/605">
+
+<!-- BEGIN STRUCTURED_DATA -->
+<script type="application/ld+json">
+    {"@context":"http://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@id":"https://brownbears.tistory.com/605","name":null},"url":"https://brownbears.tistory.com/605","headline":"[Git] 브랜치 전략 - GitLab Flow","description":"Github flow는 너무 간단해서 배포, 릴리즈 등의 조금 복잡한 이슈를 보완하기 위해 나온 전략입니다. Gitlab flow의 브랜치는 아래와 같이 사용을 합니다. 브랜치 설명 feature 모든 기능 구현은 feature 브랜치에서 시작합니다. feature 브랜치는 master 브랜치에서 분기되고 머지됩니다. master gitlab flow의 master 브랜치 역할은 git flow의 develop 브랜치와 동일합니다. master 브랜치는 feature 브랜치에서 병합된 기능에 대해 test를 진행합니다. 전체적인 테스트가 진행되어 기능에 대한 보장이 되었다면 production 브랜치로 머지합니다. 만약 staging 단계를 원한다면 pre-production 브랜치로 머지를 진행합니다...","author":{"@type":"Person","name":"불곰1","logo":null},"image":{"@type":"ImageObject","url":"https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcpFS3u%2FbtrswUeKUIu%2FAAAAAAAAAAAAAAAAAAAAAHMRzotwMRncyws0ZzQWWJrO-ImVO7ukZ9krbWfoFhxX%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3D0KQNnE1lliQuyFzBUeyHpTXItRg%253D","width":"800px","height":"800px"},"datePublished":"2022-02-05T18:50:53+09:00","dateModified":"2022-02-05T18:50:53+09:00","publisher":{"@type":"Organization","name":"TISTORY","logo":{"@type":"ImageObject","url":"https://t1.daumcdn.net/tistory_admin/static/images/openGraph/opengraph.png","width":"800px","height":"800px"}}}
+</script>
+<!-- END STRUCTURED_DATA -->
+<link rel="stylesheet" type="text/css" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/dialog.css">
+<link rel="stylesheet" type="text/css" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/font(1).css">
+<link rel="stylesheet" type="text/css" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/postBtn.css">
+<link rel="stylesheet" type="text/css" href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/tistory.css">
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/common(1).js"></script>
+
+                
+                <meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><script async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/ca-pub-7830004216974778"></script><script async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/AGSKWxVXW5ZS6Q6V3O-4-IZ05WX5qIyk52_vNGt8DFMVvO_AEdGuW0IyPQe_EwrFf4nmoKzvUVyzKmYR805A0qim6yUAsyB89lFneQNQaJgUlRccv-gaWmqidmrMR8qnzGWaNIJGm1GYGA=="></script><script async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/AGSKWxUjBg1iHRhjF-Uep_YVOdSWmJTeRHgS_xHiSfax1DQ1oHc9FiflcGsVXhr2BynmCxpoTESsrELHrXddGsOEtviu8gK9gxOyj19DzXOM6vg8iJlPoix3rl3qxAKRxLNIopTz7snRMg=="></script><script async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/AGSKWxXTdLSXzkPI4WqdSLZmpVtCtIxVkH8ftvnFJak8gScSFh2xtRMgksiriBJU5ua2xe_yAFfkFZ8ZHb2CHXwa69LvJzMcQYBox30ny9UuxbmDO8I8FalMCbEvQWwI22YhWeR4cBu3fA=="></script></head>
+
+                                                <body id="tt-body-page" class="thema_aqua">
+                
+                
+                
+    
+        <!-- warp / 테마 변경시 thema_xxx 변경 -->
+        <div id="wrap" class="thema_aqua">
+
+            <!-- area_menu -->
+            <div class="area_menu">
+
+                <nav class="menu_navigation">
+                    <ul class="list_gnb">
+  <li class="t_menu_home first"><a href="https://brownbears.tistory.com/" target="" class="link_gnb link_lnb">홈</a></li>
+</ul>
+                    <ul class="tt_category"><li class=""><a href="https://brownbears.tistory.com/category" class="link_tit link_lnb" style="display: none;"> 분류 전체보기 </a>
+  <ul class="category_list list_gnb"><li class=""><a href="https://brownbears.tistory.com/category/CoreOS" class="link_item link_gnb link_lnb"> CoreOS </a>
+  <ul class="sub_category_list list_lnb"><li class=""><a href="https://brownbears.tistory.com/category/CoreOS/Docker" class="link_sub_item link_lnb"> Docker </a></li>
+</ul>
+</li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%9B%B9" class="link_item link_gnb link_lnb"> 웹 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%84%9C%EB%B2%84" class="link_item link_gnb link_lnb"> 서버 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%95%84%EB%91%90%EC%9D%B4%EB%85%B8" class="link_item link_gnb link_lnb"> 아두이노 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%A0%80%EC%9E%A5%EC%86%8C" class="link_item link_gnb link_lnb"> 저장소 </a>
+  <ul class="sub_category_list list_lnb"><li class=""><a href="https://brownbears.tistory.com/category/%EC%A0%80%EC%9E%A5%EC%86%8C/NPM" class="link_sub_item link_lnb"> NPM </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%A0%80%EC%9E%A5%EC%86%8C/PYPI" class="link_sub_item link_lnb"> PYPI </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%A0%80%EC%9E%A5%EC%86%8C/BOWER" class="link_sub_item link_lnb"> BOWER </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%A0%80%EC%9E%A5%EC%86%8C/git" class="link_sub_item link_lnb"> git </a></li>
+</ul>
+</li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%96%B8%EC%96%B4" class="link_item link_gnb link_lnb"> 언어 </a>
+  <ul class="sub_category_list list_lnb"><li class=""><a href="https://brownbears.tistory.com/category/%EC%96%B8%EC%96%B4/%ED%8C%8C%EC%9D%B4%EC%8D%AC%20%26%20%EC%9E%A5%EA%B3%A0" class="link_sub_item link_lnb"> 파이썬 &amp; 장고 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%96%B8%EC%96%B4/Golang" class="link_sub_item link_lnb"> Golang </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%96%B8%EC%96%B4/%EC%89%98%20%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8" class="link_sub_item link_lnb"> 쉘 스크립트 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%96%B8%EC%96%B4/Java" class="link_sub_item link_lnb"> Java </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%96%B8%EC%96%B4/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8" class="link_sub_item link_lnb"> 자바스크립트 </a></li>
+</ul>
+</li>
+<li class=""><a href="https://brownbears.tistory.com/category/LogSystem" class="link_item link_gnb link_lnb"> LogSystem </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EA%B3%B5%EB%B6%80" class="link_item link_gnb link_lnb"> 공부 </a>
+  <ul class="sub_category_list list_lnb"><li class=""><a href="https://brownbears.tistory.com/category/%EA%B3%B5%EB%B6%80/OS" class="link_sub_item link_lnb"> OS </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EA%B3%B5%EB%B6%80/Network" class="link_sub_item link_lnb"> Network </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EA%B3%B5%EB%B6%80/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0" class="link_sub_item link_lnb"> 자료구조 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EA%B3%B5%EB%B6%80/%EB%8D%B0%EC%9D%B4%ED%84%B0" class="link_sub_item link_lnb"> 데이터 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EA%B3%B5%EB%B6%80/%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4" class="link_sub_item link_lnb"> 디자인 패턴 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EA%B3%B5%EB%B6%80/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4%26%ED%97%AC%EB%A6%84" class="link_sub_item link_lnb"> 쿠버네티스&amp;헬름 </a></li>
+</ul>
+</li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8" class="link_item link_gnb link_lnb"> 블록체인 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/DB" class="link_item link_gnb link_lnb"> DB </a>
+  <ul class="sub_category_list list_lnb"><li class=""><a href="https://brownbears.tistory.com/category/DB/PostgreSQL" class="link_sub_item link_lnb"> PostgreSQL </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/DB/Elasticsearch" class="link_sub_item link_lnb"> Elasticsearch </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/DB/Bigquery" class="link_sub_item link_lnb"> Bigquery </a></li>
+</ul>
+</li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EC%BA%90%EC%8B%9C%EC%8B%9C%EC%8A%A4%ED%85%9C" class="link_item link_gnb link_lnb"> 캐시시스템 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/%EB%B3%B4%EC%95%88%20%26%20%EB%B3%B4%EC%95%88" class="link_item link_gnb link_lnb"> 보안 &amp; 보안 </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/AWS%20%26%20GCP" class="link_item link_gnb link_lnb"> AWS &amp; GCP </a></li>
+<li class=""><a href="https://brownbears.tistory.com/category/IDE%20%26%20%EC%97%90%EB%94%94%ED%84%B0" class="link_item link_gnb link_lnb"> IDE &amp; 에디터 </a></li>
+</ul>
+</li>
+</ul>
+
+                </nav>
+
+                <div class="m_sidebar pc_blind">
+                    <div class="related_posts_mobile">
+                                    <div class="related_type related_type_view">
+                                        <h2 class="title_related">인기포스트</h2>
+                                        <ul class="list_related">
+                                            
+                                                <li>
+                                                    <a href="https://brownbears.tistory.com/161" class="link_related">
+                                                        <span class="bg"></span>
+                                                        <span class="txt"><strong>[Linux] tar, gz, zip 압축 및 압축 해⋯</strong></span>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://brownbears.tistory.com/180" class="link_related">
+                                                        <span class="bg"></span>
+                                                        <span class="txt"><strong>[DB] DDL, DML, DCL 이란?</strong></span>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://brownbears.tistory.com/511" class="link_related" style="background-image:url(&#39;https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99A22D495F2572B938&#39;)">
+                                                        <span class="bg"></span>
+                                                        <span class="txt"><strong>[UML] 시퀀스 다이어그램 (Sequence Diag⋯</strong></span>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://brownbears.tistory.com/577" class="link_related" style="background-image:url(&#39;https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FOqXza%2Fbtrcc6uqgek%2FAAAAAAAAAAAAAAAAAAAAAFFvJyUBsCBOTXKnM1uwAoXeqCyBaf_eLvQdUBA7Nr6C%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3D60yXYAsayGaw24wmMhJei9ppsC0%253D&#39;)">
+                                                        <span class="bg"></span>
+                                                        <span class="txt"><strong>[UML] 클래스 다이어그램 (Class Diagram⋯</strong></span>
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                    <!-- // related_type_view -->
+
+                    <!-- about_me -->
+                    <div class="about_me_mobile">
+                        <div class="box_sidebar about_me">
+                            <h3 class="title_sidebar">ABOUT ME</h3>
+                            <p class="text_about">-</p>
+                        </div>
+                    </div>
+                </div>
+									<div>  </div>
+                <div class="box_visit">
+                    <dl class="data_today">
+                        <dt class="title_visit">Today</dt>
+                        <dd class="item_visit">45</dd>
+                    </dl>
+                    <dl class="data_yesterday">
+                        <dt class="title_visit">Yesterday</dt>
+                        <dd class="item_visit">863</dd>
+                    </dl>
+                    <dl class="data_total">
+                        <dt class="title_visit">Total</dt>
+                        <dd class="item_visit">6,954,735</dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- // area_menu -->
+
+            <!-- container  / header에 btn_search 클릭하면 class에 search_on 추가(모바일에서만 작동) -->
+            <div id="container" style="height: auto !important;">
+                <header id="header">
+                    <div class="inner_header">
+                        <h1 class="logo">
+                            <a href="https://brownbears.tistory.com/" title="불곰" class="link_logo">
+                                <span class="blind">불곰</span>
+                                
+                                    <span class="title_text">불곰</span>
+                                
+                            </a>
+                        </h1>
+                        <button type="button" class="btn_menu"><span class="icon-Menu"></span><span class="icon-Close"></span><span class="blind">메뉴</span></button>
+                        <button class="btn_search"><span class="icon-Search"></span><span class="blind">검색</span></button>
+
+                        <!-- btn_search 클릭하면 나옴 /-->
+                        <div class="area_search thema_apply" style="display: none;">
+                            <form action="https://brownbears.tistory.com/605" method="get">
+                                <legend><span class="blind">컨텐츠 검색</span></legend>
+                                
+                                    <input type="text" name="search" title="Search" placeholder="Search" value="" class="inp_search" onkeypress="if (event.keyCode == 13) { try {
+    window.location.href = &#39;/search&#39; + &#39;/&#39; + looseURIEncode(document.getElementsByName(&#39;search&#39;)[0].value);
+    document.getElementsByName(&#39;search&#39;)[0].value = &#39;&#39;;
+    return false;
+} catch (e) {} }">
+                                
+                                <button type="button" title="검색어 삭제" class="btn_search_del"></button>
+                            </form>
+                        </div>
+
+                    </div>
+                </header>
+
+                <main id="main" style="height: auto !important;">
+                    
+                    <!-- inner_index -->
+                    <div class="inner_index" style="height: auto !important;">
+                        
+
+                        
+
+                        <!-- category_list -->
+
+                        <div class="category_list index_type_common index_type_horizontal" style="height: auto !important;">
+													
+                            <ul class="list_horizontal" style="height: auto !important;">
+                                                
+                    
+                                    
+
+
+                                    
+                                        <li class="category_content_area" style="height: auto !important;">
+                                            <!-- area_view_content -->
+                                            <div class="area_view_content" style="height: auto !important;">
+
+                                                <!-- article_content -->
+                                                <div class="article_content" style="height: auto !important;">
+<!-- 글 최상단 애드센스 시작 -->
+<div align="center" style="padding-bottom:20px">
+    <span>
+        <style>
+            .myads1 {
+                width: 320px;
+                height: 250px;
+            }
+
+            @media (min-width: 450px) {
+                .myads1 {
+                    width: 336px;
+                    height: 280px;
+                }
+        </style>
+        <script async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/f(7).txt"></script>
+        <!-- 컨텐츠-PC좌측상단,모바일상단-반응형 -->
+        <ins class="adsbygoogle myads1" style="display: inline-block; width: 336px; height: 280px;" data-ad-client="ca-pub-7830004216974778" data-ad-slot="5126448809" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_1_host" style="border: none; height: 280px; width: 336px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_1" name="aswift_1" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:336px;height:280px;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="336" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/ads.html" data-google-container-id="a!2" tabindex="0" title="Advertisement" aria-label="Advertisement" data-google-query-id="CJu01-b56I4DFYrvFgUdGG0PVA" data-load-complete="true"></iframe></div></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </span>
+    <span style="margin-left: 10px;text-align: center">
+        <style>
+            .myads2 {
+                display: none;
+            }
+
+            @media all and (min-width: 1100px) {
+                .myads2 {
+                    width: 336px;
+                    height: 280px;
+                }
+        </style>
+        <script async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/f(7).txt"></script>
+        <!-- 컨텐츠-우측상단-반응형 -->
+        <ins class="adsbygoogle myads2" style="display: inline-block; width: 0px; height: 0px;" data-ad-client="ca-pub-7830004216974778" data-ad-slot="7698316418" data-adsbygoogle-status="done" data-ad-status="unfilled"><div id="aswift_2_host" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: hidden; opacity: 0;"><iframe id="aswift_2" name="aswift_2" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:0px;height:0px;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="0" height="0" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/ads(1).html" data-google-container-id="a!3" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true" data-google-query-id="CMmo1ub56I4DFdTeFgUd4GAvHQ"></iframe></div></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </span>
+</div>
+<!-- 글 최상단 애드센스 종료 -->
+																									
+																									
+																									
+                                                    <div class="info_post">
+                                                        <a href="https://brownbears.tistory.com/605" class="link_title"><div class="title_view">[Git] 브랜치 전략 - GitLab Flow</div></a>
+																																																
+                                                        <div class="view_info_post">
+                                                            <a href="https://brownbears.tistory.com/category/%EC%A0%80%EC%9E%A5%EC%86%8C/git" class="link_category thema_apply"><span class="category">저장소/git</span></a>
+                                                            <span class="date">2022. 2. 5. 18:50</span>
+																													
+                                                        </div>
+
+                                                        
+                                                    </div>
+                                                    <!-- 본문 내용 영역 -->
+                                                    <div class="article_view" style="height: auto !important;">
+                                                        
+            <!-- System - START -->
+
+<!-- System - END -->
+
+            <div class="contents_style" style="height: auto !important;"><p data-ke-size="size16">Github flow는 너무 간단해서 배포, 릴리즈 등의 조금 복잡한 이슈를 보완하기 위해 나온 전략입니다.</p>
+<p></p><figure class="imageblock alignCenter" data-ke-mobilestyle="widthOrigin" data-filename="1.png" data-origin-width="338" data-origin-height="549"><span data-url="https://blog.kakaocdn.net/dna/cpFS3u/btrswUeKUIu/AAAAAAAAAAAAAAAAAAAAAHMRzotwMRncyws0ZzQWWJrO-ImVO7ukZ9krbWfoFhxX/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1756652399&amp;allow_ip=&amp;allow_referer=&amp;signature=0KQNnE1lliQuyFzBUeyHpTXItRg%3D" data-phocus="https://blog.kakaocdn.net/dna/cpFS3u/btrswUeKUIu/AAAAAAAAAAAAAAAAAAAAAHMRzotwMRncyws0ZzQWWJrO-ImVO7ukZ9krbWfoFhxX/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1756652399&amp;allow_ip=&amp;allow_referer=&amp;signature=0KQNnE1lliQuyFzBUeyHpTXItRg%3D" data-alt="pre-production 브랜치가 없는 전략"><img src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/img.png" srcset="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcpFS3u%2FbtrswUeKUIu%2FAAAAAAAAAAAAAAAAAAAAAHMRzotwMRncyws0ZzQWWJrO-ImVO7ukZ9krbWfoFhxX%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3D0KQNnE1lliQuyFzBUeyHpTXItRg%253D" onerror="this.onerror=null; this.src=&#39;//t1.daumcdn.net/tistory_admin/static/images/no-image-v1.png&#39;; this.srcset=&#39;//t1.daumcdn.net/tistory_admin/static/images/no-image-v1.png&#39;;" loading="lazy" width="338" height="549" data-filename="1.png" data-origin-width="338" data-origin-height="549" data-phocus-index="0"></span><figcaption>pre-production 브랜치가 없는 전략</figcaption>
+</figure>
+<figure class="imageblock alignCenter" data-ke-mobilestyle="widthOrigin" data-filename="2.png" data-origin-width="560" data-origin-height="618"><span data-url="https://blog.kakaocdn.net/dna/cKg4cN/btrsC9Iih0f/AAAAAAAAAAAAAAAAAAAAAIRJqAsCV504lMNGCfbx0sVBs1764IsZVtx0WgjOnxED/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1756652399&amp;allow_ip=&amp;allow_referer=&amp;signature=G49C%2B3Tgji%2BW4h2n%2FmA53RdVnE4%3D" data-phocus="https://blog.kakaocdn.net/dna/cKg4cN/btrsC9Iih0f/AAAAAAAAAAAAAAAAAAAAAIRJqAsCV504lMNGCfbx0sVBs1764IsZVtx0WgjOnxED/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1756652399&amp;allow_ip=&amp;allow_referer=&amp;signature=G49C%2B3Tgji%2BW4h2n%2FmA53RdVnE4%3D" data-alt="pre-production 브랜치를 두어 staging 단계를 가지는 전략"><img src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/img(1).png" srcset="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcKg4cN%2FbtrsC9Iih0f%2FAAAAAAAAAAAAAAAAAAAAAIRJqAsCV504lMNGCfbx0sVBs1764IsZVtx0WgjOnxED%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3DG49C%252B3Tgji%252BW4h2n%252FmA53RdVnE4%253D" onerror="this.onerror=null; this.src=&#39;//t1.daumcdn.net/tistory_admin/static/images/no-image-v1.png&#39;; this.srcset=&#39;//t1.daumcdn.net/tistory_admin/static/images/no-image-v1.png&#39;;" loading="lazy" width="560" height="618" data-filename="2.png" data-origin-width="560" data-origin-height="618" data-phocus-index="1"></span><figcaption>pre-production 브랜치를 두어 staging 단계를 가지는 전략</figcaption>
+</figure>
+<p></p>
+<div class="google-auto-placed" style="width: 100%; height: auto; clear: none; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-7830004216974778" data-adsbygoogle-status="done" style="display: block; margin: 10px auto; background-color: transparent; height: 0px;" data-ad-status="unfilled"><div id="aswift_4_host" style="border: none; height: 0px; width: 800px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: hidden; opacity: 0;"><iframe id="aswift_4" name="aswift_4" browsingtopics="true" style="left: 0px; position: absolute; top: 0px; border: 0px; width: 800px; height: 0px; min-height: auto; max-height: none; min-width: auto; max-width: none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="800" height="0" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/ads(2).html" data-google-container-id="a!5" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true" data-google-query-id="COyqwPD56I4DFU7yTAIdPZ0EQQ"></iframe></div></ins></div><p data-ke-size="size16">Gitlab flow의 브랜치는 아래와 같이 사용을 합니다.</p>
+<h1>브랜치 설명</h1>
+<h2 data-ke-size="size26">feature</h2>
+<p data-ke-size="size16">모든 기능 구현은 feature 브랜치에서 시작합니다. feature 브랜치는 master 브랜치에서 분기되고 머지됩니다.</p>
+<h2 data-ke-size="size26">master</h2>
+<p data-ke-size="size16">gitlab flow의 master 브랜치 역할은 git flow의 develop 브랜치와 동일합니다. master 브랜치는 feature 브랜치에서 병합된 기능에 대해 test를 진행합니다. 전체적인 테스트가 진행되어 기능에 대한 보장이 되었다면 production 브랜치로 머지합니다.</p>
+<p data-ke-size="size16">만약 staging 단계를 원한다면 pre-production 브랜치로 머지를 진행합니다.</p>
+<h2 data-ke-size="size26">production</h2>
+<div class="google-auto-placed" style="width: 100%; height: auto; clear: none; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-7830004216974778" data-adsbygoogle-status="done" style="display: block; margin: 10px auto; background-color: transparent; height: 280px;" data-ad-status="filled"><div id="aswift_5_host" style="border: none; height: 280px; width: 800px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_5" name="aswift_5" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:800px;height:280px;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="800" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/ads(3).html" data-google-container-id="a!6" tabindex="0" title="Advertisement" aria-label="Advertisement" data-google-query-id="CLedwPD56I4DFSn2FgUdXxAk9w" data-load-complete="true"></iframe></div></ins></div><p data-ke-size="size16">gitlab flow의 production 브랜치 역할은 git flow의 master 브랜치와 동일합니다. 테스트가 끝난 기능에 대해 배포를 하기 위한 브랜치입니다.</p>
+<h2 data-ke-size="size26">pre-production</h2>
+<p data-ke-size="size16">master → production 브랜치 사이에 pre-production 브랜치를 두어 변경 사항을 바로 production에 배포하지 않고 test server에 배포하여 통합 테스트를 진행하거나 시간을 두고 반영하는 브랜치입니다.</p>
+<h1>요약</h1>
+<p data-ke-size="size16">Git flow는 너무 복잡하고 Github flow는 너무 단순하다 라는 요구사항에 나온 전략으로 서비스의 규모가 조금 커진 팀에서 사용하기 좋은 전략으로 보입니다.</p>
+<p data-ke-size="size16">위에서 설명한 내용보다 더 사항을 알고 싶다면 <a href="https://docs.gitlab.com/ee/topics/gitlab_flow.html" data-token-index="1" data-reactroot=""><span>gitlab flow</span></a> 사이트에서 확인할 수 있습니다.</p></div>
+            <!-- System - START -->
+
+<!-- System - END -->
+
+<script onerror="changeAdsenseToNaverAd()" async="" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/f(8).txt" crossorigin="anonymous" data-checked-head="true"></script>
+<!-- inventory -->
+<ins class="adsbygoogle" style="margin: 50px 0px; display: block; height: 0px;" data-ad-client="ca-pub-9527582522912841" data-ad-slot="4947159016" data-ad-format="auto" data-full-width-responsive="true" data-ad-type="inventory" data-ad-adfit-unit="DAN-HCZEy0KQLPMGnGuC" data-adsbygoogle-status="done" data-ad-status="unfilled"><div id="aswift_3_host" style="border: none; height: 0px; width: 800px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: hidden; opacity: 0;"><iframe id="aswift_3" name="aswift_3" browsingtopics="true" style="left: 0px; position: absolute; top: 0px; border: 0px; width: 800px; height: 0px; min-height: auto; max-height: none; min-width: auto; max-width: none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="800" height="0" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/ads(4).html" data-google-container-id="a!4" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true" data-google-query-id="CM_AvvD56I4DFTFgDwId5sgwSQ"></iframe></div></ins>
+
+<script id="adsense_script">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script>
+    if(window.observeAdsenseUnfilledState !== undefined){ observeAdsenseUnfilledState(); }
+</script>
+<div data-tistory-react-app="NaverAd"><div style="padding: 0px 20px; margin: 15px 0px; border: 1px solid rgb(238, 238, 238);"><div style="padding: 16px 0px 18px; border-top: none;"><div style="display: flex; height: 24px; align-items: center; margin-bottom: 6px;"><a href="https://ader.naver.com/v1/2P4E4FJ3qAmlITDXqKUrv6f8Rmt2zNO8flcwfPEWLDHS8WowhHPWckazjOhEG4CHh1FVh00QL7jqqwib15OiScIl7mgAuZBPNO5R0wv94Q8gUeThau0jFA6e9GABvH6VO-wFH4HweDxx_iWKpLumWcbSMMpkTPUW3nsI-OkVRolUHrTaEe8_FQ2QvW84bRtMjooVUAz83X8yKy0V9IZS-lcqpb2GPBuCK7vqS2IYk8SoXl_kmD9Yi5JScuIJlVWgcQqCHbOsr3ptAkoba0g320iWiqVW3FE8rSoDgIBaQDfwAe42LeUnzQOiUxxILCOPDTtgfkStJNDlrHyw7Ks13e59OM_ro0by1niUQ3ax55seufTrZ4u0X-CZHuaTjLhoiHMBGlfIHMgXX1gQV0nS1OkmE05oditOARI1oN0OkDSmgUFx9xNv6LUk6Wb2wEuWmeQPC24Yp5-W4NcuZm8oc-r7NElnHP0DwstXeuaNA4WtbvYSI6TQmhwxZMAOlojleaMXs4m9gsdCXwnxSC3Qb_mY-WKaBm19_PJntIBOaSApBdYgolX_khNkj2rdExnLh7rVBgXJVtqStdWwCrUDH0A_o4gFKFydJVCA5SDy5ac=?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="font-size: 14px; line-height: 17px; color: rgb(153, 153, 153); text-decoration: none; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-overflow: ellipsis; word-break: break-all;">http://bithumb.com</a><span style="display: flex; height: 18px; margin-left: 4px; padding: 0px 5px 0px 6px; border: 1px solid rgb(221, 221, 221); border-radius: 17px; font-weight: 500; font-size: 11px; color: rgb(102, 102, 102); align-items: center; flex-shrink: 0;">광고</span></div><div style="display: flex; overflow: hidden; height: 80px;"><div style="overflow: hidden; padding-right: 40px;"><a href="https://ader.naver.com/v1/2P4E4FJ3qAmlITDXqKUrv6f8Rmt2zNO8flcwfPEWLDHS8WowhHPWckazjOhEG4CHh1FVh00QL7jqqwib15OiScIl7mgAuZBPNO5R0wv94Q8gUeThau0jFA6e9GABvH6VO-wFH4HweDxx_iWKpLumWcbSMMpkTPUW3nsI-OkVRolUHrTaEe8_FQ2QvW84bRtMjooVUAz83X8yKy0V9IZS-lcqpb2GPBuCK7vqS2IYk8SoXl_kmD9Yi5JScuIJlVWgcQqCHbOsr3ptAkoba0g320iWiqVW3FE8rSoDgIBaQDfwAe42LeUnzQOiUxxILCOPDTtgfkStJNDlrHyw7Ks13e59OM_ro0by1niUQ3ax55seufTrZ4u0X-CZHuaTjLhoiHMBGlfIHMgXX1gQV0nS1OkmE05oditOARI1oN0OkDSmgUFx9xNv6LUk6Wb2wEuWmeQPC24Yp5-W4NcuZm8oc-r7NElnHP0DwstXeuaNA4WtbvYSI6TQmhwxZMAOlojleaMXs4m9gsdCXwnxSC3Qb_mY-WKaBm19_PJntIBOaSApBdYgolX_khNkj2rdExnLh7rVBgXJVtqStdWwCrUDH0A_o4gFKFydJVCA5SDy5ac=?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-decoration: none; font-size: 18px; line-height: 24px; color: rgb(1, 109, 215);">요즘 대세, 대표거래소 빗썸 2025년 브랜드 평판 1위</a><a href="https://ader.naver.com/v1/2P4E4FJ3qAmlITDXqKUrv6f8Rmt2zNO8flcwfPEWLDHS8WowhHPWckazjOhEG4CHh1FVh00QL7jqqwib15OiScIl7mgAuZBPNO5R0wv94Q8gUeThau0jFA6e9GABvH6VO-wFH4HweDxx_iWKpLumWcbSMMpkTPUW3nsI-OkVRolUHrTaEe8_FQ2QvW84bRtMjooVUAz83X8yKy0V9IZS-lcqpb2GPBuCK7vqS2IYk8SoXl_kmD9Yi5JScuIJlVWgcQqCHbOsr3ptAkoba0g320iWiqVW3FE8rSoDgIBaQDfwAe42LeUnzQOiUxxILCOPDTtgfkStJNDlrHyw7Ks13e59OM_ro0by1niUQ3ax55seufTrZ4u0X-CZHuaTjLhoiHMBGlfIHMgXX1gQV0nS1OkmE05oditOARI1oN0OkDSmgUFx9xNv6LUk6Wb2wEuWmeQPC24Yp5-W4NcuZm8oc-r7NElnHP0DwstXeuaNA4WtbvYSI6TQmhwxZMAOlojleaMXs4m9gsdCXwnxSC3Qb_mY-WKaBm19_PJntIBOaSApBdYgolX_khNkj2rdExnLh7rVBgXJVtqStdWwCrUDH0A_o4gFKFydJVCA5SDy5ac=?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; padding-top: 4px; text-decoration: none; font-size: 16px; line-height: 22px; color: rgb(51, 51, 51);">가입자 수, 유동성, 브랜드평판, 방문자 수 1등, 가상자산 거래는 빗썸으로 시작</a></div><a href="https://ader.naver.com/v1/T7QnYPa1DYVHJg1w1pLpcCWEiVFlRiIF_rC0q5XtuF_vBm9V9DFp4iI-gLhpvQVkhgC-gGD0tn3iqkXthGt2sPneSp0VSTDDzzVBPgiXSJjTvoq53gPBGeBE1RL-hEQPZCw_a_lukfGgXv6j-1PCBgsRQrVZGavKKZ_3OShL0QjNi0KukhA0T4UeXi7VzCypr_VAAV4qQaHGRGa6hshcfyjVRkOfb_TXlnEptUR4MAaY-FafGMPINk7BtoVltMRr9YUiMDAAMX9TUaaFxRTTsP24c2qvicNE63djkIOtf00tGrJGwzaTpmKq2_YuV3oVsGUJY_Yk8bmpQBvLmQO-OXkIrnRdqtxsrDCRxi3wa_5FF4W90uiFazbnxw5tJpjSKY2TAt3jtD-ZrtYmIQUAqTduI7qdI7q35tA1oBeFUq4KqhDWGe-1SHm8BUN3cxnPFxy_kSy9bkS5GgXtO7Lcnw8LvE2hS09ubVPNE7vJoRCvBBU4CTYj_hXhWhZFCCeiV6EdM0pO53AEel1XvuJlL50pu0QOYl1-sYQ2We2jIw0Yez_CBesqOK_s_QqS_ZCwuypzICE3HYr-CeJyck4L08csmY7TvIDxL5n9evMi0Ys=?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: block; overflow: hidden; margin-left: auto; border-radius: 8px; flex: 0 0 80px;"><img alt="" height="80" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/1412647-f23059db-eacc-486a-a4b7-f63e87f075a4.png" width="80"></a></div></div><div style="padding: 16px 0px 18px; border-top: 1px solid rgb(238, 238, 238);"><div style="display: flex; height: 24px; align-items: center; margin-bottom: 6px;"><a href="https://ader.naver.com/v1/IjFjPEXgNRv_wUSXHrr9HrrebhkE8xOWArBujzmQ2UAZRFrtdeDoRiGvkQ37j5pWY0wTDdBEBZCd9q9PM63fAoAUoEMGOeklwrPHwId1dtb25labjlCQmtT_MQiIOVjUT6Jy7qMC0t6KmUlt7cIfq5rcim3wIVSwsSDYXlf4A4faBkxsu1SNQGPP4qbMIhXdNEmoOHN0Dk9ZS22pgK52rhegavL8vfmZ_nycdYXYC6sH8fwg6OPVmI7VaIWLyQZP?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="font-size: 14px; line-height: 17px; color: rgb(153, 153, 153); text-decoration: none; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-overflow: ellipsis; word-break: break-all;">http://www.mhaus.co.kr</a><span style="display: flex; height: 18px; margin-left: 4px; padding: 0px 5px 0px 6px; border: 1px solid rgb(221, 221, 221); border-radius: 17px; font-weight: 500; font-size: 11px; color: rgb(102, 102, 102); align-items: center; flex-shrink: 0;">광고</span></div><div style="display: flex; overflow: hidden; height: 80px;"><div style="overflow: hidden; padding-right: 40px;"><a href="https://ader.naver.com/v1/IjFjPEXgNRv_wUSXHrr9HrrebhkE8xOWArBujzmQ2UAZRFrtdeDoRiGvkQ37j5pWY0wTDdBEBZCd9q9PM63fAoAUoEMGOeklwrPHwId1dtb25labjlCQmtT_MQiIOVjUT6Jy7qMC0t6KmUlt7cIfq5rcim3wIVSwsSDYXlf4A4faBkxsu1SNQGPP4qbMIhXdNEmoOHN0Dk9ZS22pgK52rhegavL8vfmZ_nycdYXYC6sH8fwg6OPVmI7VaIWLyQZP?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-decoration: none; font-size: 18px; line-height: 24px; color: rgb(1, 109, 215);">계측기하우스FLOW</a><a href="https://ader.naver.com/v1/IjFjPEXgNRv_wUSXHrr9HrrebhkE8xOWArBujzmQ2UAZRFrtdeDoRiGvkQ37j5pWY0wTDdBEBZCd9q9PM63fAoAUoEMGOeklwrPHwId1dtb25labjlCQmtT_MQiIOVjUT6Jy7qMC0t6KmUlt7cIfq5rcim3wIVSwsSDYXlf4A4faBkxsu1SNQGPP4qbMIhXdNEmoOHN0Dk9ZS22pgK52rhegavL8vfmZ_nycdYXYC6sH8fwg6OPVmI7VaIWLyQZP?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; padding-top: 4px; text-decoration: none; font-size: 16px; line-height: 22px; color: rgb(51, 51, 51);">FLOW 유 수량계, 순간 적산 AIR유량계 외 각종계측기전문.</a></div><a href="https://ader.naver.com/v1/XX38s604N2YNR5wyZlQRuzK5zfjsEIGGREp2dPlaVhXoiwWfODPaWK4itsPapBclruudfScSHVE6AmjRto8TSLv-__ukY7HD4IrkGhDseq4NPCuflPxmZOloImDPqFE-Pp7k-VMixFH_h6b2HV_k-e1Z-V5-yQIBKq0DOGD_7-Me_FPeB-1pAzsdpswZVNErVox9uctk24gs_sV5T3gCSNalleaB7A5U_DIX130UUfSVzOzO0tgcgw7aQ3rO-JJN?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: block; overflow: hidden; margin-left: auto; border-radius: 8px; flex: 0 0 80px;"><img alt="" height="80" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/899474-b8b0c9e2-8fd6-40fa-a095-ce15c148d23d.jpg" width="80"></a></div></div></div></div>
+
+<div class="container_postbtn #post_button_group">
+  <div class="postbtn_like"><script>window.ReactionButtonType = 'reaction';
+window.ReactionApiUrl = '//brownbears.tistory.com/reaction';
+window.ReactionReqBody = {
+    entryId: 605
+}</script>
+<div class="wrap_btn" id="reaction-605" data-tistory-react-app="Reaction"><button class="btn_post uoc-icon" data-tiara-action-name="공감_클릭"><div class="uoc-icon"><span class="ico_postbtn ico_like">좋아요</span><span class="txt_like uoc-count">3</span></div></button></div><div class="wrap_btn wrap_btn_share"><button type="button" class="btn_post sns_btn btn_share" aria-expanded="false" data-thumbnail-url="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcpFS3u%2FbtrswUeKUIu%2FAAAAAAAAAAAAAAAAAAAAAHMRzotwMRncyws0ZzQWWJrO-ImVO7ukZ9krbWfoFhxX%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3D0KQNnE1lliQuyFzBUeyHpTXItRg%253D" data-title="[Git] 브랜치 전략 - GitLab Flow" data-description="Github flow는 너무 간단해서 배포, 릴리즈 등의 조금 복잡한 이슈를 보완하기 위해 나온 전략입니다. Gitlab flow의 브랜치는 아래와 같이 사용을 합니다. 브랜치 설명 feature 모든 기능 구현은 feature 브랜치에서 시작합니다. feature 브랜치는 master 브랜치에서 분기되고 머지됩니다. master gitlab flow의 master 브랜치 역할은 git flow의 develop 브랜치와 동일합니다. master 브랜치는 feature 브랜치에서 병합된 기능에 대해 test를 진행합니다. 전체적인 테스트가 진행되어 기능에 대한 보장이 되었다면 production 브랜치로 머지합니다. 만약 staging 단계를 원한다면 pre-production 브랜치로 머지를 진행합니다..." data-profile-image="https://tistory1.daumcdn.net/tistory/1954575/attach/09aa2e0ab9af4a0fbf5d108ea5142763" data-profile-name="불곰1" data-pc-url="https://brownbears.tistory.com/605" data-relative-pc-url="/605" data-blog-title="불곰"><span class="ico_postbtn ico_share">공유하기</span></button>
+  <div class="layer_post" id="tistorySnsLayer"><div class="bundle_post"><button class="btn_mark" data-service="url" data-tiara-action-name="공유_클릭" data-tiara-layer="copy_url" data-tiara-copy="URL복사"><span class="ico_sns ico_url"></span><span class="txt_sns">URL 복사</span></button><button class="btn_mark" data-service="kakaotalk" data-tiara-action-name="공유_클릭" data-tiara-layer="kakao" data-tiara-copy="카카오톡 공유"><span class="ico_sns ico_kt"></span><span class="txt_sns">카카오톡 공유</span></button><button class="btn_mark" data-service="facebook" data-tiara-action-name="공유_클릭" data-tiara-layer="facebook" data-tiara-copy="페이스북 공유"><span class="ico_sns ico_fb"></span><span class="txt_sns">페이스북 공유</span></button><button class="btn_mark" data-service="twitter" data-tiara-action-name="공유_클릭" data-tiara-layer="X" data-tiara-copy="엑스 공유"><span class="ico_sns ico_x"></span><span class="txt_sns">엑스 공유</span></button><span class="ico_postbtn ico_arrbt"></span></div></div>
+</div><div class="wrap_btn wrap_btn_etc" data-entry-id="605" data-entry-visibility="public" data-category-visibility="public"><button type="button" class="btn_post btn_etc2" aria-expanded="false"><span class="ico_postbtn ico_etc">게시글 관리</span></button>
+  <div class="layer_post" id="tistoryEtcLayer"></div>
+</div></div>
+<button type="button" class="btn_menu_toolbar btn_subscription #subscribe" data-blog-id="1954575" data-url="https://brownbears.tistory.com/605" data-device="web_pc" data-tiara-action-name="구독 버튼_클릭" data-tiara-copy="구독하기"><em class="txt_state">구독하기</em><strong class="txt_tool_id">불곰</strong><span class="img_common_tistory ico_check_type1"></span></button><div class="postbtn_ccl" data-ccl-type="2" data-ccl-derive="1">
+    <a href="https://creativecommons.org/licenses/by/4.0/deed.ko" target="_blank" class="link_ccl" rel="license">
+        <span class="bundle_ccl">
+            <span class="ico_postbtn ico_ccl1">저작자표시</span> 
+        </span>
+        <span class="screen_out">(새창열림)</span>
+    </a>
+</div>
+<!--
+<rdf:RDF xmlns="https://web.resource.org/cc/" xmlns:dc="https://purl.org/dc/elements/1.1/" xmlns:rdf="https://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <Work rdf:about="">
+        <license rdf:resource="https://creativecommons.org/licenses/by/4.0/deed.ko" />
+    </Work>
+    <License rdf:about="https://creativecommons.org/licenses/by/4.0/deed.ko">
+        <permits rdf:resource="https://web.resource.org/cc/Reproduction"/>
+        <permits rdf:resource="https://web.resource.org/cc/Distribution"/>
+        <requires rdf:resource="https://web.resource.org/cc/Notice"/>
+        <requires rdf:resource="https://web.resource.org/cc/Attribution"/>
+        <permits rdf:resource="https://web.resource.org/cc/DerivativeWorks"/>
+
+    </License>
+</rdf:RDF>
+-->  <div data-tistory-react-app="SupportButton"></div>
+</div>
+
+                                                    </div>
+
+                                                    
+
+                                                    
+                                                        <!-- related_type_view -->
+                                         <div class="related_type related_type_view">
+        <h2 class="title_related">관련글 <a href="https://brownbears.tistory.com/category/%EC%A0%80%EC%9E%A5%EC%86%8C/git" class="link_add thema_apply">관련글
+                더보기</a></h2>
+        <ul class="list_related">
+            
+                <li>
+                    <a href="https://brownbears.tistory.com/611?category=186238" class="link_related" style="background-image:url(&#39;https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FSThXP%2FbtruDB3ST99%2FAAAAAAAAAAAAAAAAAAAAALr_aKQ4eIn8NEgID147m5Hed-2Was_Xh7115NqtA0t_%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3Do1IT4vtm7PlF2Kzzgx0SkXxdQ4g%253D&#39;)
+                        !important">
+                        <span class="bg"></span>
+                        <span class="txt"><strong>[Git] Branch 전략 - merge, rebase, squash란</strong></span>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://brownbears.tistory.com/606?category=186238" class="link_related" style="background-image:url(&#39;https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FvhWj1%2FbtrsnKqHdyV%2FAAAAAAAAAAAAAAAAAAAAAJ3bmnTb-qwu5GDiSS-u8OXdHBlXKXFKvIexpZ7wJ4MY%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3D4eEAdkMGffki9M5GbJnWCBwJ5gw%253D&#39;)
+                        !important">
+                        <span class="bg"></span>
+                        <span class="txt"><strong>[Git] 체리픽 (Cherry-pick)</strong></span>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://brownbears.tistory.com/604?category=186238" class="link_related">
+                        <span class="bg"></span>
+                        <span class="txt"><strong>[Git] 여러 커밋 revert 하기</strong></span>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="https://brownbears.tistory.com/603?category=186238" class="link_related" style="background-image:url(&#39;https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F0snbs%2FbtrshAfNLGF%2FAAAAAAAAAAAAAAAAAAAAABpQ0h-XG4rsnDv6op2sBWzmTnccJSMR9Y8xl7wmPk_U%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3DLAv5xSCQ%252Fv8aQTKiD0zr3lD0Q4Q%253D&#39;)
+                        !important">
+                        <span class="bg"></span>
+                        <span class="txt"><strong>[Git] 브랜치 전략 - Github flow</strong></span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>               
+                                                        <!-- // related_type_view -->
+                                                    
+
+                                                    <!-- area_comment -->
+                                                    <div class="area_reply">
+                                                        <div class="box_reply_info">
+                                                            <a href="https://brownbears.tistory.com/605#rp" onclick="" class="reply_events">
+                                                            <p class="item_info">댓글 <span class="thema_apply">
+                                                                    <span id="commentCount605_0">1</span>
+                                                                </span></p>
+                                                            </a>
+                                                            <button type="button" class="btn_fold"><span class="blind">댓글
+                                                                    접기</span></button>
+                                                            <button type="button" class="btn_spread" style="display: none;"><span class="blind">댓글 펼치기</span></button>
+                                                        </div>
+
+                                                        <div data-tistory-react-app="Namecard"><div class="tt_box_namecard"><div class="tt_cont"><a class="tt_tit_cont" href="https://brownbears.tistory.com/">불곰</a><a class="tt_desc" href="https://brownbears.tistory.com/">이것저것</a><button class="tt_btn_subscribe" data-tiara-action-name="프로필영역 구독 버튼_클릭" data-tiara-copy="구독하기" type="button"><span class="tt_txt_g">구독하기</span><span class="tt_img_area_reply tt_ico_cross"></span></button></div><a class="tt_wrap_thumb" href="https://brownbears.tistory.com/"><span class="tt_thumb_g" style="background-image: url(&quot;https://img1.daumcdn.net/thumb/S56x56/?scode=mtistory2&amp;fname=https%3A%2F%2Ftistory1.daumcdn.net%2Ftistory%2F1954575%2Fattach%2F09aa2e0ab9af4a0fbf5d108ea5142763&quot;);"></span></a></div></div><div id="entry605Comment">
+                                                            <!-- reply_content -->
+                                                            <div class="reply_content">
+                                                                <button type="button" class="btn_more btn_replymore" style="display: none;">이전 댓글 더보기</button>
+
+                                                                <!-- box_comment_list -->
+                                                                <div class="box_comment_list">
+                                                                    
+                                                                        <div class="comment-list">
+                                                                            <ul>
+                                                                                            
+
+            <li id="comment8937104">
+                                                                                        <div class="author-meta">
+                                                                                            <img src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/profile_default_06.png" class="avatar" alt="">
+                                                                                            <span class="nickname">조형규</span>
+                                                                                            <span class="date">2024.03.13 09:01 <a href="https://brownbears.tistory.com/toolbar/popup/abuseReport/?entryId=605&amp;commentId=8937104" onclick="window.open(this.href, &#39;ThisBlogReportPopup&#39;, &#39;width=550, height=510, toolbar=no, menubar=no, status=no, scrollbars=no&#39;); return false;">신고</a></span>
+                                                                                        </div>
+                                                                                        <p>간결하고 이해하기 쉬운 설명 감사합니다.~~</p>
+                                                                                        <div class="control">
+                                                                                            <a href="https://brownbears.tistory.com/605#comment8937104">댓글주소</a>
+                                                                                            <a href="https://brownbears.tistory.com/605#" onclick="deleteComment(8937104);return false">수정/삭제</a>
+                                                                                            <a href="https://brownbears.tistory.com/605#" onclick=" commentComment(8937104);return false">댓글쓰기</a>
+                                                                                        </div>
+                                                                                        
+                                                                                    </li><li id="none_display_division_for_comment_list_605" style="display: none;"></li>
+<script type="text/javascript">
+    setInitialEntryComments(605, 1754011302)
+</script>
+                                                                            </ul>
+                                                                        </div>
+                                                                    
+                                                                </div>
+                                                                <!-- // box_comment_list -->
+
+                                                                <form method="post" action="https://brownbears.tistory.com/comment/add/605" onsubmit="return false" style="margin: 0">
+    
+                                                        <!-- reply_write -->
+                                                        
+                                                            <div class="reply_write">
+
+                                                                <div class="form_content thema_apply">
+                                                                    <textarea id="comment" name="comment" placeholder="댓글을 입력해주세요."></textarea>
+                                                                </div>
+                                                                
+                                                                    
+                                                                        <div class="form_guest">
+                                                                            <div class="box_inp">
+                                                                                <div class="inner_inp">
+                                                                                    <input type="text" name="name" value="" title="이름" placeholder="이름" class="inp_comment inp_name">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="box_inp">
+                                                                                <div class="inner_inp">
+                                                                                    <input type="password" name="password" value="" title="비밀번호" maxlength="12" placeholder="비밀번호" class="inp_comment inp_password">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    
+
+                                                                    <div class="form_reg">
+                                                                        <label><input type="checkbox" name="secret">
+                                                                            비밀글</label>
+                                                                    </div>
+                                                                
+
+
+                                                    <div class="form_reg">
+                                                                    <button type="button" class="btn_register thema_apply" onclick="addComment(this, 605); return false;">등록</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <!-- // reply_write -->
+                                                    
+
+
+                                                            </div>
+                                                            <!-- // reply_content -->
+                                                        </div>
+<script type="text/javascript">loadedComments[605]=true;
+findFragmentAndHighlight(605);</script>
+
+                                                    </div>
+                                                    <!-- // area_comment -->
+
+                                                </div>
+                                                <!-- article_content -->
+
+                                            </div>
+                                        </li>
+                                    
+                                
+                    
+                
+                            </ul>
+                        </div>
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+<!-- 글/카테고리-하단-반응형 시작 -->
+<!--
+<div align="center" style="padding-bottom:20px">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7830004216974778" data-ad-slot="3623340032"
+        data-ad-format="auto" data-full-width-responsive="false"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+-->
+<!-- 글/카테고리-하단-반응형 종료 -->
+															
+                        
+
+
+                    </div>
+                    <!-- // inner_index -->
+
+                </main>
+
+                <!-- aside -->
+                <aside class="sidebar mobile_blind">
+                    <div class="inner_sidebar thema_apply">
+                        
+                                <!-- 방문자수 -->
+                                <div class="box_sidebar visit_counter">
+                                    <div class="inbox">
+                                        <span class="total">6,954,735</span>
+                                        <span class="today">45</span>
+                                        <span class="yesterday">863</span>
+                                    </div>
+                                </div>
+                            
+                                <!-- 인기포스트 -->
+                                <div class="related_posts">
+                                    <div class="related_type related_type_view">
+                                        <div class="google-auto-placed" style="width: 100%; height: auto; clear: none; text-align: center;"><ins data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-7830004216974778" data-adsbygoogle-status="done" style="display: block; margin: 10px auto; background-color: transparent; height: 280px;"><div id="aswift_6_host" style="border: none; height: 280px; width: 800px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"></div></ins></div><h2 class="title_related">인기포스트</h2>
+                                        <ul class="list_related">
+                                            
+                                                <li>
+                                                    <a href="https://brownbears.tistory.com/161" class="link_related">
+                                                        <span class="bg"></span>
+                                                        <span class="txt"><strong>[Linux] tar, gz, zip 압축 및 압축 해⋯</strong></span>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://brownbears.tistory.com/180" class="link_related">
+                                                        <span class="bg"></span>
+                                                        <span class="txt"><strong>[DB] DDL, DML, DCL 이란?</strong></span>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://brownbears.tistory.com/511" class="link_related" style="background-image:url(&#39;https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99A22D495F2572B938&#39;)">
+                                                        <span class="bg"></span>
+                                                        <span class="txt"><strong>[UML] 시퀀스 다이어그램 (Sequence Diag⋯</strong></span>
+                                                    </a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="https://brownbears.tistory.com/577" class="link_related" style="background-image:url(&#39;https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FOqXza%2Fbtrcc6uqgek%2FAAAAAAAAAAAAAAAAAAAAAFFvJyUBsCBOTXKnM1uwAoXeqCyBaf_eLvQdUBA7Nr6C%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3D60yXYAsayGaw24wmMhJei9ppsC0%253D&#39;)">
+                                                        <span class="bg"></span>
+                                                        <span class="txt"><strong>[UML] 클래스 다이어그램 (Class Diagram⋯</strong></span>
+                                                    </a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            
+                    </div>
+                </aside>
+                <!-- // aside -->
+
+                <!-- footer -->
+                
+                <footer id="footer">
+                    
+                </footer>
+                <!-- // footer -->
+
+            </div>
+            <!-- // container -->
+
+        </div>
+        <!-- // wrap -->
+    
+
+<div class="#menubar menu_toolbar toolbar_rb">
+  <h2 class="screen_out">티스토리툴바</h2>
+<div class="btn_tool"><button class="btn_menu_toolbar btn_subscription #subscribe" data-blog-id="1954575" data-url="https://brownbears.tistory.com" data-device="web_pc" data-tiara-copy="구독하기"><strong class="txt_tool_id">불곰</strong><em class="txt_state">구독하기</em><span class="img_common_tistory ico_check_type1"></span></button></div></div>
+<div class="#menubar menu_toolbar "></div>
+<div class="layer_tooltip">
+  <div class="inner_layer_tooltip">
+    <p class="desc_g"></p>
+  </div>
+</div>
+<div id="editEntry" style="position:absolute;width:1px;height:1px;left:-100px;top:-100px"></div>
+
+
+                        <!-- SyntaxHighlight - START -->
+        <link href="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/darcula.min.css" rel="stylesheet"><script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/highlight.min.js"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/delphi.min.js"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/php.min.js"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/python.min.js"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/r.min.js" defer=""></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/ruby.min.js"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/scala.min.js" defer=""></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/shell.min.js"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/sql.min.js"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/swift.min.js" defer=""></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/typescript.min.js" defer=""></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/vbnet.min.js" defer=""></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+        <!-- SyntaxHighlight - END -->
+
+                
+                <div style="margin:0; padding:0; border:none; background:none; float:none; clear:none; z-index:0"></div>
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/common(1).js"></script>
+<script type="text/javascript">window.roosevelt_params_queue = window.roosevelt_params_queue || [{channel_id: 'dk', channel_label: '{tistory}'}]</script>
+<script type="text/javascript" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/roosevelt_dk_bt.js" async="async"></script>
+
+                
+                <script>window.tiara = {"svcDomain":"user.tistory.com","section":"글뷰","trackPage":"글뷰_보기","page":"글뷰","key":"1954575-605","customProps":{"userId":"0","blogId":"1954575","entryId":"605","role":"guest","trackPage":"글뷰_보기","filterTarget":false},"entry":{"entryId":"605","entryTitle":"[Git] 브랜치 전략 - GitLab Flow","entryType":"POST","categoryName":"저장소/git","categoryId":"186238","serviceCategoryName":"IT 인터넷","serviceCategoryId":401,"author":"1472341","authorNickname":"불곰1","blogNmae":"불곰","image":"kage@cpFS3u/btrswUeKUIu/0VzMlqENM1oD2SKo8kPlZ0","plink":"/605","tags":[]},"kakaoAppKey":"3e6ddd834b023f24221217e370daed18","appUserId":"null"}</script>
+<script type="module" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/index(1).js"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/polyfills-legacy(1).js" nomodule="true" defer="true"></script>
+<script src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/index-legacy(1).js" nomodule="true" defer="true"></script>
+
+                
+<script>
+    $('.article_content').find('table').each(function (idx, el) {
+        $(el).wrap('<div class="table-overflow">')
+    })
+</script>
+
+
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_0" name="aswift_0" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/ads(5).html" data-google-container-id="a!1" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true"></iframe></div></ins><div id="__phocus__" class="__phocus__" tabindex="-1"></div><div id="shortcutLayer" class="doc_help" style="display: none;"><button class="btn_doc_close">닫기</button>
+  <h2 class="title">단축키</h2>
+  <div class="content mac_platform">
+    <div class="container">
+      <h3 class="item_title">내 블로그</h3>
+      <table class="item">
+        <tbody>
+        
+    <tr>
+      <th>내 블로그 - 관리자 홈 전환</th>
+      <td>
+        <div class="pc">
+          <kbd>Q</kbd>
+        </div>
+        <div class="mac">
+          <kbd>Q</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>새 글 쓰기</th>
+      <td>
+        <div class="pc">
+          <kbd>W</kbd>
+        </div>
+        <div class="mac">
+          <kbd>W</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        </tbody>
+      </table>
+      <h3 class="item_title">블로그 게시글</h3>
+      <table class="item">
+        <tbody>
+        
+    <tr>
+      <th>글 수정 (권한 있는 경우)</th>
+      <td>
+        <div class="pc">
+          <kbd>E</kbd>
+        </div>
+        <div class="mac">
+          <kbd>E</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>댓글 영역으로 이동</th>
+      <td>
+        <div class="pc">
+          <kbd>C</kbd>
+        </div>
+        <div class="mac">
+          <kbd>C</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        </tbody>
+      </table>
+    </div>
+    <div class="container">
+      <h3 class="item_title">모든 영역</h3>
+      <table class="item">
+        <tbody>
+        
+    <tr>
+      <th>이 페이지의 URL 복사</th>
+      <td>
+        <div class="pc">
+          <kbd>S</kbd>
+        </div>
+        <div class="mac">
+          <kbd>S</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>맨 위로 이동</th>
+      <td>
+        <div class="pc">
+          <kbd>T</kbd>
+        </div>
+        <div class="mac">
+          <kbd>T</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>티스토리 홈 이동</th>
+      <td>
+        <div class="pc">
+          <kbd>H</kbd>
+        </div>
+        <div class="mac">
+          <kbd>H</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>단축키 안내</th>
+      <td>
+        <div class="pc">
+          <kbd>Shift</kbd> + <kbd>/</kbd>
+        </div>
+        <div class="mac">
+          <kbd>⇧</kbd> + <kbd>/</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="info">* 단축키는 한글/영문 대소문자로 이용 가능하며, 티스토리 기본 도메인에서만 동작합니다.</p>
+  </div><iframe name="googlefcPresent" style="display: none; width: 0px; height: 0px; border: none; z-index: -1000; left: -1000px; top: -1000px;" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/saved_resource(2).html"></iframe><iframe name="__tcfapiLocator" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/saved_resource(3).html" style="display: none; width: 0px; height: 0px; border: none; z-index: -1000; left: -1000px; top: -1000px;"></iframe><iframe name="googlefcInactive" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/saved_resource(4).html" style="display: none; width: 0px; height: 0px; border: none; z-index: -1000; left: -1000px; top: -1000px;"></iframe><iframe name="googlefcLoaded" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/saved_resource(5).html" style="display: none; width: 0px; height: 0px; border: none; z-index: -1000; left: -1000px; top: -1000px;"></iframe><iframe src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/aframe.html" width="0" height="0" style="display: none;"></iframe></body><iframe id="google_esf" name="google_esf" src="./[Git] 브랜치 전략 - GitLab Flow __ 불곰_files/zrt_lookup_fy2021.html" style="display: none;"></iframe></html>

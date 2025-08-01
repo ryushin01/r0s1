@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)https://achoo-ios.tistory.com/34 -->
+<html lang="ko" data-phocus-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                <script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/f.txt"></script><script type="text/javascript">if (!window.T) { window.T = {} }
+window.T.config = {"TOP_SSL_URL":"https://www.tistory.com","PREVIEW":false,"ROLE":"guest","PREV_PAGE":"","NEXT_PAGE":"","BLOG":{"id":5967459,"name":"achoo-ios","title":"Achoo!OS","isDormancy":false,"nickName":"ACHOO!","status":"open","profileStatus":"normal"},"NEED_COMMENT_LOGIN":false,"COMMENT_LOGIN_CONFIRM_MESSAGE":"","LOGIN_URL":"https://www.tistory.com/auth/login/?redirectUrl=https://achoo-ios.tistory.com/34","DEFAULT_URL":"https://achoo-ios.tistory.com","USER":{"name":null,"homepage":null,"id":0,"profileImage":null},"SUBSCRIPTION":{"status":"none","isConnected":false,"isPending":false,"isWait":false,"isProcessing":false,"isNone":true},"IS_LOGIN":false,"HAS_BLOG":false,"IS_SUPPORT":false,"IS_SCRAPABLE":false,"TOP_URL":"http://www.tistory.com","JOIN_URL":"https://www.tistory.com/member/join","PHASE":"prod","ROLE_GROUP":"visitor"};
+window.T.entryInfo = {"entryId":34,"isAuthor":false,"categoryId":1068417,"categoryLabel":"iOS"};
+window.appInfo = {"domain":"tistory.com","topUrl":"https://www.tistory.com","loginUrl":"https://www.tistory.com/auth/login","logoutUrl":"https://www.tistory.com/auth/logout"};
+window.initData = {};
+
+window.TistoryBlog = {
+    basePath: "",
+    url: "https://achoo-ios.tistory.com",
+    tistoryUrl: "https://achoo-ios.tistory.com",
+    manageUrl: "https://achoo-ios.tistory.com/manage",
+    token: "yD6SUkzT8V7LvuW+snnPjsVRr7e4F84XNx0ZBg8TqZMS/RRno3MXqcUh4CrMCQDx"
+};
+var servicePath = "";
+var blogURL = "";</script>
+
+                
+                
+                
+                        <!-- BusinessLicenseInfo - START -->
+        
+            <link href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/style.css" rel="stylesheet" type="text/css">
+
+            <script>function switchFold(entryId) {
+    var businessLayer = document.getElementById("businessInfoLayer_" + entryId);
+
+    if (businessLayer) {
+        if (businessLayer.className.indexOf("unfold_license") > 0) {
+            businessLayer.className = "business_license_layer";
+        } else {
+            businessLayer.className = "business_license_layer unfold_license";
+        }
+    }
+}
+</script>
+
+        
+        <!-- BusinessLicenseInfo - END -->
+        <!-- DaumShow - START -->
+        <style type="text/css">#daumSearchBox {
+    height: 21px;
+    background-image: url(//i1.daumcdn.net/imgsrc.search/search_all/show/tistory/plugin/bg_search2_2.gif);
+    margin: 5px auto;
+    padding: 0;
+}
+
+#daumSearchBox input {
+    background: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+#daumSearchBox #daumLogo {
+    width: 34px;
+    height: 21px;
+    float: left;
+    margin-right: 5px;
+    background-image: url(//i1.daumcdn.net/img-media/tistory/img/bg_search1_2_2010ci.gif);
+}
+
+#daumSearchBox #show_q {
+    background-color: transparent;
+    border: none;
+    font: 12px Gulim, Sans-serif;
+    color: #555;
+    margin-top: 4px;
+    margin-right: 15px;
+    float: left;
+}
+
+#daumSearchBox #show_btn {
+    background-image: url(//i1.daumcdn.net/imgsrc.search/search_all/show/tistory/plugin/bt_search_2.gif);
+    width: 37px;
+    height: 21px;
+    float: left;
+    margin: 0;
+    cursor: pointer;
+    text-indent: -1000em;
+}
+</style>
+
+        <!-- DaumShow - END -->
+
+<!-- System - START -->
+
+<!-- System - END -->
+
+        <!-- TistoryProfileLayer - START -->
+        <link href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/style(1).css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/script.js"></script>
+
+        <!-- TistoryProfileLayer - END -->
+
+                
+                <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="format-detection" content="telephone=no">
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/tiara.min.js"></script><meta name="referrer" content="always">
+<meta name="google-adsense-platform-account" content="ca-host-pub-9691043933427338">
+<meta name="google-adsense-platform-domain" content="tistory.com">
+<meta name="google-adsense-account" content="ca-pub-7454589661664486">
+<meta name="description" content="이전 CI/CD 회고에 대한 글 이후로, 다른 툴에 대해서도 알아보게 되었고, 그 중 GitLab에 대해 알아보다가, 우연치 않게 브랜칭 전략에 대한 글을 읽게 되었고, 필자가 제목에 있는 세 개의 브랜칭 전략에 대한 경험이 있다는 것을 새삼 깨닫게 되어 회고를 해보면 좋을 것 같아 이렇게 글을 작성하게 되었다. 우선 짧은 회고를 먼저 진행해보자면, 올해 3월에 출시한 해핏이라는 앱에서는 Git-flow를 채택하여 개발을 진행했고, 지금 다시 돌이켜 보았을때 적합한 부분도 있고 어떤 부분은 부적합하지 않았나 싶은 부분도 있다. 이에 대해서는 마지막에 정리해서 작성해보도록 하겠다. 당시 해핏에 적용된 룰을 기반으로 설명을 하자면, Git-flow는 메인 브랜치인 master와 develop, 그리고 rel..">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://achoo-ios.tistory.com/34">
+<meta property="og.article.author" content="ACHOO!">
+<meta property="og:site_name" content="Achoo!OS">
+<meta property="og:title" content="브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)">
+<meta name="by" content="ACHOO!">
+<meta property="og:description" content="이전 CI/CD 회고에 대한 글 이후로, 다른 툴에 대해서도 알아보게 되었고, 그 중 GitLab에 대해 알아보다가, 우연치 않게 브랜칭 전략에 대한 글을 읽게 되었고, 필자가 제목에 있는 세 개의 브랜칭 전략에 대한 경험이 있다는 것을 새삼 깨닫게 되어 회고를 해보면 좋을 것 같아 이렇게 글을 작성하게 되었다. 우선 짧은 회고를 먼저 진행해보자면, 올해 3월에 출시한 해핏이라는 앱에서는 Git-flow를 채택하여 개발을 진행했고, 지금 다시 돌이켜 보았을때 적합한 부분도 있고 어떤 부분은 부적합하지 않았나 싶은 부분도 있다. 이에 대해서는 마지막에 정리해서 작성해보도록 하겠다. 당시 해핏에 적용된 룰을 기반으로 설명을 하자면, Git-flow는 메인 브랜치인 master와 develop, 그리고 rel..">
+<meta property="og:image" content="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcZemBz%2FbtsA5fHtTFp%2FAAAAAAAAAAAAAAAAAAAAAGx59ocHKYeehTEY9zopESjIBJW9-JXjbHYliejWXh2e%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3DG6MXxDx2ZmktvqbclcVYv1UIkQc%253D">
+<meta property="article:section" content="&#39;모바일&#39;">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@TISTORY">
+<meta name="twitter:title" content="브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)">
+<meta name="twitter:description" content="이전 CI/CD 회고에 대한 글 이후로, 다른 툴에 대해서도 알아보게 되었고, 그 중 GitLab에 대해 알아보다가, 우연치 않게 브랜칭 전략에 대한 글을 읽게 되었고, 필자가 제목에 있는 세 개의 브랜칭 전략에 대한 경험이 있다는 것을 새삼 깨닫게 되어 회고를 해보면 좋을 것 같아 이렇게 글을 작성하게 되었다. 우선 짧은 회고를 먼저 진행해보자면, 올해 3월에 출시한 해핏이라는 앱에서는 Git-flow를 채택하여 개발을 진행했고, 지금 다시 돌이켜 보았을때 적합한 부분도 있고 어떤 부분은 부적합하지 않았나 싶은 부분도 있다. 이에 대해서는 마지막에 정리해서 작성해보도록 하겠다. 당시 해핏에 적용된 룰을 기반으로 설명을 하자면, Git-flow는 메인 브랜치인 master와 develop, 그리고 rel..">
+<meta property="twitter:image" content="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcZemBz%2FbtsA5fHtTFp%2FAAAAAAAAAAAAAAAAAAAAAGx59ocHKYeehTEY9zopESjIBJW9-JXjbHYliejWXh2e%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3DG6MXxDx2ZmktvqbclcVYv1UIkQc%253D">
+<meta content="https://achoo-ios.tistory.com/34" property="dg:plink">
+<meta name="plink">
+<meta name="title" content="브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)">
+<meta name="article:media_name" content="Achoo!OS">
+<meta property="article:mobile_url" content="https://achoo-ios.tistory.com/m/34">
+<meta property="article:pc_url" content="https://achoo-ios.tistory.com/34">
+<meta property="article:mobile_view_url" content="https://achoo-ios.tistory.com/m/34">
+<meta property="article:pc_view_url" content="https://achoo-ios.tistory.com/34">
+<meta property="article:talk_channel_view_url" content="https://achoo-ios.tistory.com/m/34">
+<meta property="article:pc_service_home" content="https://www.tistory.com">
+<meta property="article:mobile_service_home" content="https://www.tistory.com/m">
+<meta property="article:txid" content="5967459_34">
+<meta property="article:published_time" content="2023-11-28T21:58:45+09:00">
+<meta property="og:regDate" content="20231128095845">
+<meta property="article:modified_time" content="2023-11-28T21:59:29+09:00">
+<script type="module" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/index.js" defer=""></script>
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/index-legacy.js" defer="" nomodule="true"></script>
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/polyfills-legacy.js" defer="" nomodule="true"></script>
+<link rel="icon" sizes="any" href="https://t1.daumcdn.net/tistory_admin/favicon/tistory_favicon_32x32.ico">
+<link rel="icon" type="image/svg+xml" href="https://t1.daumcdn.net/tistory_admin/top_v2/bi-tistory-favicon.svg">
+<link rel="apple-touch-icon" href="https://t1.daumcdn.net/tistory_admin/top_v2/tistory-apple-touch-favicon.png">
+<link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/font.css">
+<link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/content.css">
+<link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/index.css">
+<link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/uselessPMargin.css">
+<script type="text/javascript">(function() {
+    var tjQuery = jQuery.noConflict(true);
+    window.tjQuery = tjQuery;
+    window.orgjQuery = window.jQuery; window.jQuery = tjQuery;
+    window.jQuery = window.orgjQuery; delete window.orgjQuery;
+})()</script>
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/base.js"></script>
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/kakao.min.js"></script>
+
+                
+<script async="" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/f(1).txt" crossorigin="anonymous" data-checked-head="true"></script>
+
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+<title>브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)</title>
+<link rel="stylesheet" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/style(2).css">
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/jquery-1.12.4.min.js"></script>
+
+                
+                
+                <style type="text/css">.another_category {
+    border: 1px solid #E5E5E5;
+    padding: 10px 10px 5px;
+    margin: 10px 0;
+    clear: both;
+}
+
+.another_category h4 {
+    font-size: 12px !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #E5E5E5 !important;
+    padding: 2px 0 6px !important;
+}
+
+.another_category h4 a {
+    font-weight: bold !important;
+}
+
+.another_category table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100% !important;
+    margin-top: 10px !important;
+}
+
+* html .another_category table {
+    width: auto !important;
+}
+
+*:first-child + html .another_category table {
+    width: auto !important;
+}
+
+.another_category th, .another_category td {
+    padding: 0 0 4px !important;
+}
+
+.another_category th {
+    text-align: left;
+    font-size: 12px !important;
+    font-weight: normal;
+    word-break: break-all;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+.another_category td {
+    text-align: right;
+    width: 80px;
+    font-size: 11px;
+}
+
+.another_category th a {
+    font-weight: normal;
+    text-decoration: none;
+    border: none !important;
+}
+
+.another_category th a.current {
+    font-weight: bold;
+    text-decoration: none !important;
+    border-bottom: 1px solid !important;
+}
+
+.another_category th span {
+    font-weight: normal;
+    text-decoration: none;
+    font: 10px Tahoma, Sans-serif;
+    border: none !important;
+}
+
+.another_category_color_gray, .another_category_color_gray h4 {
+    border-color: #E5E5E5 !important;
+}
+
+.another_category_color_gray * {
+    color: #909090 !important;
+}
+
+.another_category_color_gray th a.current {
+    border-color: #909090 !important;
+}
+
+.another_category_color_gray h4, .another_category_color_gray h4 a {
+    color: #737373 !important;
+}
+
+.another_category_color_red, .another_category_color_red h4 {
+    border-color: #F6D4D3 !important;
+}
+
+.another_category_color_red * {
+    color: #E86869 !important;
+}
+
+.another_category_color_red th a.current {
+    border-color: #E86869 !important;
+}
+
+.another_category_color_red h4, .another_category_color_red h4 a {
+    color: #ED0908 !important;
+}
+
+.another_category_color_green, .another_category_color_green h4 {
+    border-color: #CCE7C8 !important;
+}
+
+.another_category_color_green * {
+    color: #64C05B !important;
+}
+
+.another_category_color_green th a.current {
+    border-color: #64C05B !important;
+}
+
+.another_category_color_green h4, .another_category_color_green h4 a {
+    color: #3EA731 !important;
+}
+
+.another_category_color_blue, .another_category_color_blue h4 {
+    border-color: #C8DAF2 !important;
+}
+
+.another_category_color_blue * {
+    color: #477FD6 !important;
+}
+
+.another_category_color_blue th a.current {
+    border-color: #477FD6 !important;
+}
+
+.another_category_color_blue h4, .another_category_color_blue h4 a {
+    color: #1960CA !important;
+}
+
+.another_category_color_violet, .another_category_color_violet h4 {
+    border-color: #E1CEEC !important;
+}
+
+.another_category_color_violet * {
+    color: #9D64C5 !important;
+}
+
+.another_category_color_violet th a.current {
+    border-color: #9D64C5 !important;
+}
+
+.another_category_color_violet h4, .another_category_color_violet h4 a {
+    color: #7E2CB5 !important;
+}
+</style>
+
+                
+                <link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/revenue.css">
+<link rel="canonical" href="https://achoo-ios.tistory.com/34">
+
+<!-- BEGIN STRUCTURED_DATA -->
+<script type="application/ld+json">
+    {"@context":"http://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@id":"https://achoo-ios.tistory.com/34","name":null},"url":"https://achoo-ios.tistory.com/34","headline":"브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)","description":"이전 CI/CD 회고에 대한 글 이후로, 다른 툴에 대해서도 알아보게 되었고, 그 중 GitLab에 대해 알아보다가, 우연치 않게 브랜칭 전략에 대한 글을 읽게 되었고, 필자가 제목에 있는 세 개의 브랜칭 전략에 대한 경험이 있다는 것을 새삼 깨닫게 되어 회고를 해보면 좋을 것 같아 이렇게 글을 작성하게 되었다. 우선 짧은 회고를 먼저 진행해보자면, 올해 3월에 출시한 해핏이라는 앱에서는 Git-flow를 채택하여 개발을 진행했고, 지금 다시 돌이켜 보았을때 적합한 부분도 있고 어떤 부분은 부적합하지 않았나 싶은 부분도 있다. 이에 대해서는 마지막에 정리해서 작성해보도록 하겠다. 당시 해핏에 적용된 룰을 기반으로 설명을 하자면, Git-flow는 메인 브랜치인 master와 develop, 그리고 rel..","author":{"@type":"Person","name":"ACHOO!","logo":null},"image":{"@type":"ImageObject","url":"https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcZemBz%2FbtsA5fHtTFp%2FAAAAAAAAAAAAAAAAAAAAAGx59ocHKYeehTEY9zopESjIBJW9-JXjbHYliejWXh2e%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3DG6MXxDx2ZmktvqbclcVYv1UIkQc%253D","width":"800px","height":"800px"},"datePublished":"2023-11-28T21:58:45+09:00","dateModified":"2023-11-28T21:59:29+09:00","publisher":{"@type":"Organization","name":"TISTORY","logo":{"@type":"ImageObject","url":"https://t1.daumcdn.net/tistory_admin/static/images/openGraph/opengraph.png","width":"800px","height":"800px"}}}
+</script>
+<!-- END STRUCTURED_DATA -->
+<link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/dialog.css">
+<link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/font(1).css">
+<link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/postBtn.css">
+<link rel="stylesheet" type="text/css" href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/tistory.css">
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/common.js"></script>
+
+                
+                <meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><style type="text/css">#DragSchLayer{display:block;position:absolute;z-index:1000;width:61px;height:31px;margin:-30px 0px 0px -5px;background:url(//search1.daumcdn.net/search/statics/common/pi/btn_drag_rect.png);cursor:pointer}             @media             only screen and (-webkit-min-device-pixel-ratio: 1.5),             only screen and (min-device-pixel-ratio: 1.5),             only screen and (min-resolution: 1.5dppx) {             #DragSchLayer{background-image:url(//search1.daumcdn.net/search/statics/common/pi/r2/btn_drag_rect.png);background-size:61px 31px}}            </style><meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"></head>
+                                                <body id="tt-body-page" class="color-gray post-type-text paging-view-more">
+                
+                
+                
+
+<div id="acc-nav">
+	<a href="https://achoo-ios.tistory.com/34#content">본문 바로가기</a>
+</div>
+<div id="wrap" style="height: auto !important;">
+	<header id="header">
+		<h1><a href="https://achoo-ios.tistory.com/">Achoo!OS</a></h1>
+		<button type="button" class="mobile-menu"><span>메뉴</span></button>
+		<div class="menu">
+			<nav id="gnb">
+				<ul class="tt_category"><li class=""><a href="https://achoo-ios.tistory.com/category" class="link_tit"> 분류 전체보기 <span class="c_cnt">(37)</span> </a>
+  <ul class="category_list"><li class=""><a href="https://achoo-ios.tistory.com/category/iOS" class="link_item"> iOS <span class="c_cnt">(30)</span> </a></li>
+<li class=""><a href="https://achoo-ios.tistory.com/category/Design%20Thinking" class="link_item"> Design Thinking <span class="c_cnt">(3)</span> </a></li>
+<li class=""><a href="https://achoo-ios.tistory.com/category/%EA%B0%9C%EB%98%A5%EC%B2%A0%ED%95%99" class="link_item"> 개똥철학 <span class="c_cnt">(2)</span> </a></li>
+<li class=""><a href="https://achoo-ios.tistory.com/category/Algorithm%20Test" class="link_item"> Algorithm Test <span class="c_cnt">(1)</span> </a></li>
+</ul>
+</li>
+</ul>
+
+			</nav>
+			<div class="social-link">
+				
+				
+				
+				
+			</div>
+			<p>POWERED BY TISTORY</p>
+		</div>
+		<div class="search">
+			
+				<label for="search" class="screen_out">블로그 내 검색</label>
+				<input id="search" type="text" name="search" value="" placeholder="검색내용을 입력하세요." onkeypress="if (event.keyCode == 13) { try {
+    window.location.href = &#39;/search&#39; + &#39;/&#39; + looseURIEncode(document.getElementsByName(&#39;search&#39;)[0].value);
+    document.getElementsByName(&#39;search&#39;)[0].value = &#39;&#39;;
+    return false;
+} catch (e) {} }">
+					<button type="submit" onclick="try {
+    window.location.href = &#39;/search&#39; + &#39;/&#39; + looseURIEncode(document.getElementsByName(&#39;search&#39;)[0].value);
+    document.getElementsByName(&#39;search&#39;)[0].value = &#39;&#39;;
+    return false;
+} catch (e) {}">검색</button>
+				
+		</div>
+	</header>
+	<hr>
+	<section class="container" style="height: auto !important;">
+		
+		<article id="content" style="height: auto !important;">
+			
+
+			
+
+			
+
+			
+
+			<div class="inner" style="height: auto !important;">
+				
+
+				            
+                
+	
+	
+		<div class="hgroup">
+			<div class="category">iOS</div>
+			<h1>브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow) </h1>
+			<div class="post-meta">
+				<span class="author">ACHOO!</span>
+				<span class="date">2023. 11. 28. 21:58</span>
+				
+			</div>
+		</div>
+		<div class="entry-content" style="height: auto !important;">
+			<script onerror="changeAdsenseToNaverAd()" async="" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/f(2).txt" crossorigin="anonymous" data-checked-head="true"></script>
+<!-- inventory -->
+<ins class="adsbygoogle" style="margin: 50px 0px; display: block; height: 280px;" data-ad-client="ca-pub-9527582522912841" data-ad-slot="3825649038" data-ad-format="auto" data-full-width-responsive="true" data-ad-type="inventory" data-ad-adfit-unit="DAN-nRFiQiN4avFYIKbk" data-adsbygoogle-status="done" data-ad-status="unfilled"><div id="aswift_1_host" style="border: none; height: 280px; width: 860px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block; overflow: visible;"><iframe id="aswift_1" name="aswift_1" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:860px;height:280px;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="860" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/ads.html" data-google-container-id="a!2" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true" data-google-query-id="CLDA--z56I4DFStFwgUdgS8pHQ"></iframe></div></ins>
+
+<script id="adsense_script">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script>
+    if(window.observeAdsenseUnfilledState !== undefined){ observeAdsenseUnfilledState(); }
+</script>
+<div data-tistory-react-app="NaverAd"><div style="padding: 0px 20px; margin: 15px 0px; border: 1px solid rgb(238, 238, 238);"><div style="padding: 16px 0px 18px; border-top: none;"><div style="display: flex; height: 24px; align-items: center; margin-bottom: 6px;"><a href="https://ader.naver.com/v1/QwtYQixBPCK1G8NOMnpMylX58zL1RUnzZD7xFtEoQ1VsYWGpVTakjI0vvW8oBQK7n8eF7ykHhr7Hub8WEoOqYkyIiIXSMwcw14kkBuArQXe_tArV4K2qdDYlc7Fo0lfYoqM5J2-KkbKavk49nMP5k-CETNY93-6LuEIiskgBVl-VQcMiGo1mu_IhDFOUHkx5TPaYIN9sWlbwksMIGIGk_TJj11mkpkk8ru_vaxvvpSg=?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="font-size: 14px; line-height: 17px; color: rgb(153, 153, 153); text-decoration: none; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-overflow: ellipsis; word-break: break-all;">http://www.daeduck21.co.kr/</a><span style="display: flex; height: 18px; margin-left: 4px; padding: 0px 5px 0px 6px; border: 1px solid rgb(221, 221, 221); border-radius: 17px; font-weight: 500; font-size: 11px; color: rgb(102, 102, 102); align-items: center; flex-shrink: 0;">광고</span></div><div style="display: flex; overflow: hidden; height: 80px;"><div style="overflow: hidden; padding-right: 0px;"><a href="https://ader.naver.com/v1/QwtYQixBPCK1G8NOMnpMylX58zL1RUnzZD7xFtEoQ1VsYWGpVTakjI0vvW8oBQK7n8eF7ykHhr7Hub8WEoOqYkyIiIXSMwcw14kkBuArQXe_tArV4K2qdDYlc7Fo0lfYoqM5J2-KkbKavk49nMP5k-CETNY93-6LuEIiskgBVl-VQcMiGo1mu_IhDFOUHkx5TPaYIN9sWlbwksMIGIGk_TJj11mkpkk8ru_vaxvvpSg=?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-decoration: none; font-size: 18px; line-height: 24px; color: rgb(1, 109, 215);">(주) 대덕종합기계</a><a href="https://ader.naver.com/v1/QwtYQixBPCK1G8NOMnpMylX58zL1RUnzZD7xFtEoQ1VsYWGpVTakjI0vvW8oBQK7n8eF7ykHhr7Hub8WEoOqYkyIiIXSMwcw14kkBuArQXe_tArV4K2qdDYlc7Fo0lfYoqM5J2-KkbKavk49nMP5k-CETNY93-6LuEIiskgBVl-VQcMiGo1mu_IhDFOUHkx5TPaYIN9sWlbwksMIGIGk_TJj11mkpkk8ru_vaxvvpSg=?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; padding-top: 4px; text-decoration: none; font-size: 16px; line-height: 22px; color: rgb(51, 51, 51);">신선편이 &amp; 농산물 가공 설비, 김치공장 자동화 설비</a></div></div></div><div style="padding: 16px 0px 18px; border-top: 1px solid rgb(238, 238, 238);"><div style="display: flex; height: 24px; align-items: center; margin-bottom: 6px;"><a href="https://ader.naver.com/v1/p7Wc2El88y9BLXK01All-iFjETYzWLRnR855Pe2wmQeZFeaVAWtwx_hs4sb2jlgo8nRhJmUvmnXy3utGePWZwRvUgu5vKGuAS4AODu8RAuD7GbTZy1ng4emErxXfW5evgqX3GuiTseDe8fiQXOl9VfMjlG5yK2FVXcczCuWdMno4wne-N7sLmm-EtGpsdoScPfUupYTckgz-V0xZSGdj2lS7ml3eDGprOHkADPVu9FuVTGDBO36nxqnOmVDcG0sL9L3HfAZpA6sEUAqmEmQdTGjIwF64nQRMEoOvHk5DVqdk9O0sWEIsMoWdlCHqrnv28u70rB6C7gI61M3-J_o_33eadV-yPMT-M4P0kXbSSrbdfvm4llxWd2xdO0udBVopTGqw00GA6T_J8zknX_pRp8NK9X-bwyzXeJ3jc9IH55_SbOJT1GLQ1j4aSzEfsO6YypAEcgGo03Uisrqp8V4sXvHC_qktSlRcYcUINJZRUpW-7mtj3GBBLNhcOeZYoNVwo6DrmfIj-a0Ie7lHNtHUyi2QHZ4_VX-hvuzGTbTWzVgI02UHI6yEyAdKlx95FHa1HY-kjkVaQvzcvK0tMf7RgQ==?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="font-size: 14px; line-height: 17px; color: rgb(153, 153, 153); text-decoration: none; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-overflow: ellipsis; word-break: break-all;">http://bithumb.com</a><span style="display: flex; height: 18px; margin-left: 4px; padding: 0px 5px 0px 6px; border: 1px solid rgb(221, 221, 221); border-radius: 17px; font-weight: 500; font-size: 11px; color: rgb(102, 102, 102); align-items: center; flex-shrink: 0;">광고</span></div><div style="display: flex; overflow: hidden; height: 80px;"><div style="overflow: hidden; padding-right: 40px;"><a href="https://ader.naver.com/v1/p7Wc2El88y9BLXK01All-iFjETYzWLRnR855Pe2wmQeZFeaVAWtwx_hs4sb2jlgo8nRhJmUvmnXy3utGePWZwRvUgu5vKGuAS4AODu8RAuD7GbTZy1ng4emErxXfW5evgqX3GuiTseDe8fiQXOl9VfMjlG5yK2FVXcczCuWdMno4wne-N7sLmm-EtGpsdoScPfUupYTckgz-V0xZSGdj2lS7ml3eDGprOHkADPVu9FuVTGDBO36nxqnOmVDcG0sL9L3HfAZpA6sEUAqmEmQdTGjIwF64nQRMEoOvHk5DVqdk9O0sWEIsMoWdlCHqrnv28u70rB6C7gI61M3-J_o_33eadV-yPMT-M4P0kXbSSrbdfvm4llxWd2xdO0udBVopTGqw00GA6T_J8zknX_pRp8NK9X-bwyzXeJ3jc9IH55_SbOJT1GLQ1j4aSzEfsO6YypAEcgGo03Uisrqp8V4sXvHC_qktSlRcYcUINJZRUpW-7mtj3GBBLNhcOeZYoNVwo6DrmfIj-a0Ie7lHNtHUyi2QHZ4_VX-hvuzGTbTWzVgI02UHI6yEyAdKlx95FHa1HY-kjkVaQvzcvK0tMf7RgQ==?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-decoration: none; font-size: 18px; line-height: 24px; color: rgb(1, 109, 215);">더 늦기전에 빗썸으로 시작 국내 거래소 유동성 1위</a><a href="https://ader.naver.com/v1/p7Wc2El88y9BLXK01All-iFjETYzWLRnR855Pe2wmQeZFeaVAWtwx_hs4sb2jlgo8nRhJmUvmnXy3utGePWZwRvUgu5vKGuAS4AODu8RAuD7GbTZy1ng4emErxXfW5evgqX3GuiTseDe8fiQXOl9VfMjlG5yK2FVXcczCuWdMno4wne-N7sLmm-EtGpsdoScPfUupYTckgz-V0xZSGdj2lS7ml3eDGprOHkADPVu9FuVTGDBO36nxqnOmVDcG0sL9L3HfAZpA6sEUAqmEmQdTGjIwF64nQRMEoOvHk5DVqdk9O0sWEIsMoWdlCHqrnv28u70rB6C7gI61M3-J_o_33eadV-yPMT-M4P0kXbSSrbdfvm4llxWd2xdO0udBVopTGqw00GA6T_J8zknX_pRp8NK9X-bwyzXeJ3jc9IH55_SbOJT1GLQ1j4aSzEfsO6YypAEcgGo03Uisrqp8V4sXvHC_qktSlRcYcUINJZRUpW-7mtj3GBBLNhcOeZYoNVwo6DrmfIj-a0Ie7lHNtHUyi2QHZ4_VX-hvuzGTbTWzVgI02UHI6yEyAdKlx95FHa1HY-kjkVaQvzcvK0tMf7RgQ==?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; padding-top: 4px; text-decoration: none; font-size: 16px; line-height: 22px; color: rgb(51, 51, 51);">상승장엔 빠르게 시작하는게 답이죠! 신규 회원은 가입만 해도 7만원 즉시 지급</a></div><a href="https://ader.naver.com/v1/T7QnYPa1DYVHJg1w1pLpcLjS8rgyDhzhAjkzq2ekOzf_FvgdE4kh87f4W3TC4z6Syu73ywGFLd3dkymNxTzUDlVb3eK8tmN9MWjbwzBBIbXKvX_5dHEViNpFqhbzqnvz58L2k7wFUzmaEWu5SJN1CV6RwZ08sAHgRdeIFfSYMtYZhwT-hujrZda99KLDFN8N1kTzB1wlr-O5ASqcrkDs1UhtwOvjMGpFg_UVSpIn8rBj2sNuNQEyrV-k2_o46yS8AZts_kCnqrjrvqWktl8ZNinUSFAF4MqaAYTUClXQaPYgi5sg-O5rbHvJk27TDko0YtB9j2c0KqruFdQEQtA6CaW7y_mjjWGfWcwE6WxEQ4y5ZcqrlHbSMFAhG3wdohAT9-y0GkHtnZwyTXR3bX5no08zaBY1xMzKikPN374bLD1qtQS56VccVpfm6M5NaC_hDa7n1Y5cXpRqz3B-GcIJtdfaf7YN9su64MvunaqYAi9HSphHAtFdFNem0pQdtphtg-Olm3MXx66JApMD4hbPquidO4Xjk1rLjYHBlLCtW3I4pmp7bLt6EIklBCTOrpEHT9-hcsBRShs9lABSqbBdyi9KygQzMR6WF7voXeE-Gi0=?c=tistory.ch1&amp;t=0" rel="noreferrer" target="_blank" style="display: block; overflow: hidden; margin-left: auto; border-radius: 8px; flex: 0 0 80px;"><img alt="" height="80" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/1412647-f23059db-eacc-486a-a4b7-f63e87f075a4.png" width="80"></a></div></div></div></div>
+
+            <!-- System - START -->
+
+<!-- System - END -->
+
+            <div class="tt_article_useless_p_margin contents_style"><p data-ke-size="size16">이전 CI/CD 회고에 대한 글 이후로, 다른 툴에 대해서도 알아보게 되었고, 그 중 GitLab에 대해 알아보다가, 우연치 않게 브랜칭 전략에 대한 글을 읽게 되었고, 필자가 제목에 있는 세 개의 브랜칭 전략에 대한 경험이 있다는 것을 새삼 깨닫게 되어 회고를 해보면 좋을 것 같아 이렇게 글을 작성하게 되었다.<br><br>우선 짧은 회고를 먼저 진행해보자면, 올해 3월에 출시한 <a href="https://github.com/APP-iOS1/finalproject-hapit" target="_blank" rel="noopener">해핏</a>이라는 앱에서는 Git-flow를 채택하여 개발을 진행했고, 지금 다시 돌이켜 보았을때 적합한 부분도 있고 어떤 부분은 부적합하지 않았나 싶은 부분도 있다. 이에 대해서는 마지막에 정리해서 작성해보도록 하겠다.</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">당시 해핏에 적용된 룰을 기반으로 설명을 하자면,&nbsp;<b>Git-flow</b>는 메인 브랜치인 <b>master</b>와 <b>develop, </b>그리고<b> release</b>(초기 master에서 파생되는 브랜치이다)를 중심으로 하며, 보조적인 역할을 가진 브랜치들, 예를 들어 기능추가(당시 <b>Feat</b>으로 브랜칭하였다), 버그대응(당시 <b>Bug</b>로 브랜칭하였다) 등 브랜치에 명확한 롤(role)을 부여한 브랜치들이 있다.</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">전략에 대해서 조금 더 자세히 알아보기 전에 먼저 여담을 말해보자면, 보조강사로서 일할 때에도 훈련생분들께서 가장 많이 도움을 요청한 부분이 바로 이 브랜칭 전략이었는데, 대부분의 경우 하나를 채택해서 엄격하게 지키는 것에만 초점을 맞추게 되는 경우가 많아서 조금 아쉬웠다.</p>
+<p data-ke-size="size16"><span style="color: #333333; text-align: start;">개인적으로는 알려진 브랜치 전략들의 규칙을 중심으로 하되, </span>상황에 맞게 팀원들끼리 룰을 정하는 것이 제일 중요하다고 생각한다. 마찬가지로 본글에서, 해핏에서 적용한 Git-flow가 수 많은 개발 블로그에 작성된 그것과 완벽하게 일치하지 않을 수도 있다. 대표적인 예로,&nbsp; Git-flow에는 현재 버전 개발에 해당하는 기능들을 반영하는 <b>develop</b>&nbsp;브랜치가 있고, 다음 버전을 개발하는<b>&nbsp;<b>release</b> </b>브랜치가 나뉘어있는데(이 또한 여러 글을 참고해본 결과 두 이름과 역할이 반대로 매치되어있는 경우도 많았다),&nbsp; 해핏은 앱 심사를 받고 다음 기획으로 넘어가는 식으로 프로젝트가 진행이 되었기 때문에 release브랜치를 운용을 하지 않았고, 현재 버전에 해당하는 기능들을 반영하는 develop 브랜치 하나만 운용하였다.</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">다시 본론으로 돌아와, 해핏에 적용되었던 <b>Git-flow</b>에 대해서 이야기 하자면, 결국 이 브랜칭 전략의 중심점은 <b>master</b>에서 파생되는 <b>Develop</b> 브랜치이다. master 브랜치와 develop 브랜치는 항상 안정적인 코드가 있어야 하며, <b>master</b> 브랜치는 출시의 관점에서 봤을 땐 이 것이 곧 <b>deployment</b>의 대상인 <b>product</b>이고, <b>develop</b> 브랜치는 <b>새로운 기능(feature)</b>들이 merge되는 브랜치이다.</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">이를 도식화해서 나타내면 다음과 같다.</p>
+<p></p><figure class="imageblock alignCenter" data-ke-mobilestyle="widthOrigin" data-filename="Frame 12 (1).png" data-origin-width="2485" data-origin-height="1512"><span data-url="https://blog.kakaocdn.net/dna/cZemBz/btsA5fHtTFp/AAAAAAAAAAAAAAAAAAAAAGx59ocHKYeehTEY9zopESjIBJW9-JXjbHYliejWXh2e/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1756652399&amp;allow_ip=&amp;allow_referer=&amp;signature=G6MXxDx2ZmktvqbclcVYv1UIkQc%3D" data-phocus="https://blog.kakaocdn.net/dna/cZemBz/btsA5fHtTFp/AAAAAAAAAAAAAAAAAAAAAGx59ocHKYeehTEY9zopESjIBJW9-JXjbHYliejWXh2e/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1756652399&amp;allow_ip=&amp;allow_referer=&amp;signature=G6MXxDx2ZmktvqbclcVYv1UIkQc%3D"><img src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/img.png" srcset="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcZemBz%2FbtsA5fHtTFp%2FAAAAAAAAAAAAAAAAAAAAAGx59ocHKYeehTEY9zopESjIBJW9-JXjbHYliejWXh2e%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3DG6MXxDx2ZmktvqbclcVYv1UIkQc%253D" onerror="this.onerror=null; this.src=&#39;//t1.daumcdn.net/tistory_admin/static/images/no-image-v1.png&#39;; this.srcset=&#39;//t1.daumcdn.net/tistory_admin/static/images/no-image-v1.png&#39;;" loading="lazy" width="2485" height="1512" data-filename="Frame 12 (1).png" data-origin-width="2485" data-origin-height="1512" data-phocus-index="0"></span></figure>
+<p></p>
+<p data-ke-size="size16">그림과 함께 이해하기 쉽게 간단히 설명하자면, 먼저 master에서 위에서 이야기한 롤에 의거하여 생성된 브랜치로 각각 뿌려준다. 이후에, feature의 하위 브랜치 f1, f2는 각각의 가상의 기능을 의미하는데, 각 기능에 해당하는 개발을 진행하는 브랜치이다. 여기서 알아두어야 하는 것은, 해핏의 경우 각 기능들에 대해서 개발자에 따른 원격 저장소를 하위에 가지고 있고, 따라서 이에 해당하는 로컬 저장소에서 개발을 하여 원격에 push를 하는 룰을 만들어 따랐다. 또 feature 브랜치는 무조건 develop에서 따오는 것이 룰이다.</p>
+<p data-ke-size="size16">다음으로 볼 부분은 bug 부분인데, 해핏의 경우 출시 후에 습관 달성 연속날짜가 변경이 안되는 버그가 있었고, 이를 핫픽스하여 이와 같은 경우엔 develop과 master에 각각 merge를 해주었다.</p>
+<p data-ke-size="size16">마지막으로, develop 브랜치의 마지막부분에서 출시될 버전에 대해 확인을 하고 master에 merge 해준다.</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">이를 JIRA와 함께 관리를 했는데, 각 이슈들을 티켓팅하여, 1 ticket 1 commit을 원칙으로 하여 처리하도록 했다</p>
+<p></p><figure class="imageblock alignCenter" data-ke-mobilestyle="widthOrigin" data-filename="Screenshot 2023-11-28 at 9.08.33 PM.png" data-origin-width="1238" data-origin-height="754"><span data-url="https://blog.kakaocdn.net/dna/bF9TUK/btsA3RmN7OY/AAAAAAAAAAAAAAAAAAAAAHCAO0uCBXW-O1BbBgtl9P3hLF1Jyk2tRf1bHhoDQQOf/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1756652399&amp;allow_ip=&amp;allow_referer=&amp;signature=AFPEKA9kxs2mIpUWF2LFaZQgfyw%3D" data-phocus="https://blog.kakaocdn.net/dna/bF9TUK/btsA3RmN7OY/AAAAAAAAAAAAAAAAAAAAAHCAO0uCBXW-O1BbBgtl9P3hLF1Jyk2tRf1bHhoDQQOf/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1756652399&amp;allow_ip=&amp;allow_referer=&amp;signature=AFPEKA9kxs2mIpUWF2LFaZQgfyw%3D"><img src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/img(1).png" srcset="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbF9TUK%2FbtsA3RmN7OY%2FAAAAAAAAAAAAAAAAAAAAAHCAO0uCBXW-O1BbBgtl9P3hLF1Jyk2tRf1bHhoDQQOf%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3DAFPEKA9kxs2mIpUWF2LFaZQgfyw%253D" onerror="this.onerror=null; this.src=&#39;//t1.daumcdn.net/tistory_admin/static/images/no-image-v1.png&#39;; this.srcset=&#39;//t1.daumcdn.net/tistory_admin/static/images/no-image-v1.png&#39;;" loading="lazy" width="1238" height="754" data-filename="Screenshot 2023-11-28 at 9.08.33 PM.png" data-origin-width="1238" data-origin-height="754" data-phocus-index="1"></span></figure>
+<p></p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">위와같이 bug에 해당하는 티켓이 있으면, 그 위의 도식에서 Bug 브랜치에서 이 티켓에 해당하는 커밋을 진행하고 develop과 master에 merge되는 방식이다.</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">다음으로 <b>Github-flow</b>는 위의 Git-flow의 복잡성을 단순화하기 위해 나온 전략이라고 한다. 이 전략에서는 <b>Master</b> 브랜치는 동일한 롤을 수행하지만, 따로 feature나 develop 브랜치가 존재하지 않는다. 즉, 기능추가 및 버그수정 작업을 위한 브랜치들을 master 브랜치에서 바로 따오는 방식이라고 한다. CI 자동화와 연관 지어서 이 전략을 promoting하는 글들이 많았는데, 즉, Local - Remote로 push 후에 PR 리뷰를 통해 master에 merge가 되면 바로 CI를 통과시키고 deploy하는 방식인 것이다.<br>마지막 부분에 추가적으로 설명하겠지만 Git-flow에서는 <b>rebase-merge</b>가 주로 사용된다고 하면, 이 전략에서는 Github의 Pull request를 그대로 이용하는 식인 것 같다. 그리고 이 PR의 리뷰과정에서 master 브랜치, 즉 프로덕트 레벨로 바로 올라갈 코드이기 때문에 상당히 조심해야할 것이다. 이러한 PR과 코드리뷰 기능에 집중하여 github-flow라는 이름이 붙여진 것이라고 한다. 사실 개발을 처음 배우면서 버전관리를 처음으로 적용할 때 이 방식으로 하게 될 것이다.(물론 배포는 안하겠지만)</p>
+<p data-ke-size="size16">이러한 이유에서 보조강사로서 활동할 때, 훈련생들에게 먼저 추천한 방식이다.</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">다음으로, 외주를 하며 경험한 <b>GItlab-flow</b>는 마찬가지로 Git-flow의 복잡성을 단순화하기 위해 나온 전략이며, CI / CD tool 인 GitLab에서 만들었다고 한다. 설명의 양만 보아도 알겠지만 Github-flow는 master브랜치로 가기까지의 과정이 너무나도 간단하기 때문에 매우 불안정하며 배포, 릴리즈 등의 복잡한 이슈들에 대응이 불가능하다. GitLab-flow에서는 그 이름에 걸맞게 CI/CD 파이프라인에 초점을 맞추고 있다.</p>
+<p data-ke-size="size16">우선 <b>master</b>에서 각각 <b>feature</b>, <b>production</b>, <b>pre-production</b>(스테이징 서버를 의미하고 <b>선택사항</b>이다)으로 뿌려진다.</p>
+<p data-ke-size="size16">이 전략에서는 이전과는 달리 <b>master</b>은 git-flow의 develop 브랜치의 역할을 하고, master 브랜치에서 테스트가 진행되고 deploy가 진행되는 브랜치는 따로 <b>production</b> 브랜치이다. 따라서 production 브랜치는 이전 전략들의 master 브랜치와 같은 역할을 한다. 따라서 이 전략에서는, feature 브랜치들은 master 브랜치에서 브랜칭이 되고 머지가 된다.</p>
+<p data-ke-size="size16">여기서, master 브랜치와 production 브랜치 사이에 pre-production 브랜치를 거치는데, 여기서는 stage server 레벨에서 통합테스트를 진행하게 된다. 이 글을 쓰기 위해 조사하면서, 몇몇 분들은 운영서버를 그대로 stage에서 이용한다고 하는 분들도 계셨는데, 일반적인지는 모르겠으나 필자는 stage 서버라는 클론 서버가 존재하여 deploy 전 최종 검수를 하는 레벨이었다.</p>
+<p data-ke-size="size16">경험담에 대한 이야기는 자세히는 못하지만, git-flow를 적용할 만큼 큰 규모가 아니지만, github-flow에서 커버를 하지 못하는 deploy와 release 등의 CI 과정을 커버해야하는 경우에 사용된다고 생각하고 있다.</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">마지막으로 그 당시의 회고를 하며 정리해보도록 하겠다.</p>
+<p data-ke-size="size16">사실 처음 hapit의 레포지토리에 들어가 브랜치를 확인하면 굉장히 지저분한 걸 볼 수 있는데, 실제로 Git-flow 전략 자체가 브랜치가 굉장히 많이 생긴다는 점이 단점으로 꼽히곤 한다지만, 사실 저렇게 된 이유는 <b>rebase</b>를 하지 않아서 그렇다. 사실 당시에 rebase를 하면서 한번 꼬인적이 있어서, 얼마 남지 않은 프로젝트 기간에 rebase를 계속하며 문제상황에 직면을 하고 싶지 않아서 merge만 진행했기에 저렇게 된 것이다.</p>
+<p data-ke-size="size16">이 것이 내가 처음에 말했던 적합하지 않은 전략이었던 이유이다. 짧은 기간 안에 광범위한 기획을 감당하기엔 Git-flow는 꽤 복잡한 전략이었던 것 같다. 또한 프로덕트가 존재하는 상황에서 계속 버전 업그레이드를 했던 기간보다, 첫 출시를 위해 개발한 기간이 길기 때문에 적합하지 않다고 판단한 것이다.</p>
+<p data-ke-size="size16">하지만 반대로 굉장히 적합했다고 생각한 부분도 있다. 말했다시피 개발기간이 빡빡했던 탓에 우리는 후반에 갈수록 JIRA를 위주로 소통을 했다. 이 때, 세세하게 나뉘어있는 브랜치 덕분에 각자 담당한 파트들이 명확해졌고, JIRA업데이트와 PR 리뷰만 계속 진행하면서 차질없이 신속하게 개발이 이루어지는 것을 보며 쾌감을 느꼈던 경험이 있다. 이러한 부분이 프로젝트에 굉장히 적합했다고 느낀 부분이다. (사실 해핏 이전의 프로젝트들에는 따로 전략을 두지 않거나 Github-flow와 비슷하게 했지만, 해핏의 경우엔 내가 공들여 학습한 JIRA의 활용을 극대화하기 위해 Git-flow를 채택한 것도 있다ㅎㅎ)</p>
+<p data-ke-size="size16">&nbsp;</p>
+<p data-ke-size="size16">&nbsp;</p></div>
+            <!-- System - START -->
+
+<!-- System - END -->
+
+
+                    <div class="container_postbtn #post_button_group">
+  <div class="postbtn_like"><script>window.ReactionButtonType = 'reaction';
+window.ReactionApiUrl = '//achoo-ios.tistory.com/reaction';
+window.ReactionReqBody = {
+    entryId: 34
+}</script>
+<div class="wrap_btn" id="reaction-34" data-tistory-react-app="Reaction"><button class="btn_post uoc-icon" data-tiara-action-name="공감_클릭"><div class="uoc-icon"><span class="ico_postbtn ico_like">좋아요</span><span class="txt_like uoc-count">공감</span></div></button></div><div class="wrap_btn wrap_btn_share"><button type="button" class="btn_post sns_btn btn_share" aria-expanded="false" data-thumbnail-url="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FcZemBz%2FbtsA5fHtTFp%2FAAAAAAAAAAAAAAAAAAAAAGx59ocHKYeehTEY9zopESjIBJW9-JXjbHYliejWXh2e%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1756652399%26allow_ip%3D%26allow_referer%3D%26signature%3DG6MXxDx2ZmktvqbclcVYv1UIkQc%253D" data-title="브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)" data-description="이전 CI/CD 회고에 대한 글 이후로, 다른 툴에 대해서도 알아보게 되었고, 그 중 GitLab에 대해 알아보다가, 우연치 않게 브랜칭 전략에 대한 글을 읽게 되었고, 필자가 제목에 있는 세 개의 브랜칭 전략에 대한 경험이 있다는 것을 새삼 깨닫게 되어 회고를 해보면 좋을 것 같아 이렇게 글을 작성하게 되었다. 우선 짧은 회고를 먼저 진행해보자면, 올해 3월에 출시한 해핏이라는 앱에서는 Git-flow를 채택하여 개발을 진행했고, 지금 다시 돌이켜 보았을때 적합한 부분도 있고 어떤 부분은 부적합하지 않았나 싶은 부분도 있다. 이에 대해서는 마지막에 정리해서 작성해보도록 하겠다. 당시 해핏에 적용된 룰을 기반으로 설명을 하자면, Git-flow는 메인 브랜치인 master와 develop, 그리고 rel.." data-profile-image="https://t1.daumcdn.net/tistory_admin/static/manage/images/r3/default_L.png" data-profile-name="ACHOO!" data-pc-url="https://achoo-ios.tistory.com/34" data-relative-pc-url="/34" data-blog-title="Achoo!OS"><span class="ico_postbtn ico_share">공유하기</span></button>
+  <div class="layer_post" id="tistorySnsLayer"><div class="bundle_post"><button class="btn_mark" data-service="url" data-tiara-action-name="공유_클릭" data-tiara-layer="copy_url" data-tiara-copy="URL복사"><span class="ico_sns ico_url"></span><span class="txt_sns">URL 복사</span></button><button class="btn_mark" data-service="kakaotalk" data-tiara-action-name="공유_클릭" data-tiara-layer="kakao" data-tiara-copy="카카오톡 공유"><span class="ico_sns ico_kt"></span><span class="txt_sns">카카오톡 공유</span></button><button class="btn_mark" data-service="facebook" data-tiara-action-name="공유_클릭" data-tiara-layer="facebook" data-tiara-copy="페이스북 공유"><span class="ico_sns ico_fb"></span><span class="txt_sns">페이스북 공유</span></button><button class="btn_mark" data-service="twitter" data-tiara-action-name="공유_클릭" data-tiara-layer="X" data-tiara-copy="엑스 공유"><span class="ico_sns ico_x"></span><span class="txt_sns">엑스 공유</span></button><span class="ico_postbtn ico_arrbt"></span></div></div>
+</div><div class="wrap_btn wrap_btn_etc" data-entry-id="34" data-entry-visibility="public" data-category-visibility="public"><button type="button" class="btn_post btn_etc2" aria-expanded="false"><span class="ico_postbtn ico_etc">게시글 관리</span></button>
+  <div class="layer_post" id="tistoryEtcLayer"></div>
+</div></div>
+<button type="button" class="btn_menu_toolbar btn_subscription #subscribe" data-blog-id="5967459" data-url="https://achoo-ios.tistory.com/34" data-device="web_pc" data-tiara-action-name="구독 버튼_클릭" data-tiara-copy="구독하기"><em class="txt_state">구독하기</em><strong class="txt_tool_id">Achoo!OS</strong><span class="img_common_tistory ico_check_type1"></span></button>  <div data-tistory-react-app="SupportButton"></div>
+</div>
+
+                    <!-- PostListinCategory - START -->
+<div class="another_category another_category_color_gray">
+  <h4>'<a href="https://achoo-ios.tistory.com/category/iOS">iOS</a>' 카테고리의 다른 글</h4>
+  <div class="table-wrap"><table>
+    <tbody><tr>
+      <th><a href="https://achoo-ios.tistory.com/36">클린 아키텍쳐는 아키텍쳐 패턴의 종류인가요?</a>&nbsp;&nbsp;<span>(1)</span></th>
+      <td>2023.12.02</td>
+    </tr>
+    <tr>
+      <th><a href="https://achoo-ios.tistory.com/35">iOS에서 웹뷰를 구현할 때 꼭! 알아둬야할 고려사항에 대하여</a>&nbsp;&nbsp;<span>(1)</span></th>
+      <td>2023.12.01</td>
+    </tr>
+    <tr>
+      <th><a href="https://achoo-ios.tistory.com/33">나의 첫 오픈소스 컨트리뷰트까지의 이야기(시작은 미약하였으나 그 끝은 창대하리라 )</a>&nbsp;&nbsp;<span>(3)</span></th>
+      <td>2023.11.14</td>
+    </tr>
+    <tr>
+      <th><a href="https://achoo-ios.tistory.com/32">TCA 1.0 정식출시를 기념하여 한국어 학습 서적을 출판하였습니다(무료!)</a>&nbsp;&nbsp;<span>(4)</span></th>
+      <td>2023.11.08</td>
+    </tr>
+    <tr>
+      <th><a href="https://achoo-ios.tistory.com/31">Seoul Salam Privacy Policy</a>&nbsp;&nbsp;<span>(0)</span></th>
+      <td>2023.06.13</td>
+    </tr>
+  </tbody></table></div>
+</div>
+
+<!-- PostListinCategory - END -->
+
+		</div>
+		
+
+		
+			<div class="related-articles">
+				<h2><strong>'iOS'</strong> Related Articles</h2>
+				<ul>
+					
+						<li>
+							<a href="https://achoo-ios.tistory.com/36?category=1068417">
+								<span class="thum">
+									
+								</span>
+								<span class="title">클린 아키텍쳐는 아키텍쳐 패턴의 종류인가요?</span>
+							</a>
+						</li>
+					
+						<li>
+							<a href="https://achoo-ios.tistory.com/35?category=1068417">
+								<span class="thum">
+									
+								</span>
+								<span class="title">iOS에서 웹뷰를 구현할 때 꼭! 알아둬야할 고려사항에 대하여</span>
+							</a>
+						</li>
+					
+						<li>
+							<a href="https://achoo-ios.tistory.com/33?category=1068417">
+								<span class="thum">
+									
+										<img src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/saved_resource" alt="">
+									
+								</span>
+								<span class="title">나의 첫 오픈소스 컨트리뷰트까지의 이야기(시작은 미약하였으나 그 끝은 창대하리라 )</span>
+							</a>
+						</li>
+					
+						<li>
+							<a href="https://achoo-ios.tistory.com/32?category=1068417">
+								<span class="thum">
+									
+								</span>
+								<span class="title">TCA 1.0 정식출시를 기념하여 한국어 학습 서적을 출판하였습니다(무료!)</span>
+							</a>
+						</li>
+					
+				</ul>
+			</div>
+		
+
+		<div data-tistory-react-app="Namecard"><div class="tt_box_namecard"><div class="tt_cont"><a class="tt_tit_cont" href="https://achoo-ios.tistory.com/">Achoo!OS</a><a class="tt_desc" href="https://achoo-ios.tistory.com/">ACHOO! 님의 블로그입니다.</a><button class="tt_btn_subscribe" data-tiara-action-name="프로필영역 구독 버튼_클릭" data-tiara-copy="구독하기" type="button"><span class="tt_txt_g">구독하기</span><span class="tt_img_area_reply tt_ico_cross"></span></button></div><a class="tt_wrap_thumb" href="https://achoo-ios.tistory.com/"><span class="tt_thumb_g" style="background-image: url(&quot;https://img1.daumcdn.net/thumb/S56x56/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fstatic%2Fmanage%2Fimages%2Fr3%2Fdefault_L.png&quot;);"></span></a></div></div><div id="entry34Comment">
+			<div class="comments">
+				<div data-tistory-react-app="Comment"><div class="tt-comment-cont"><div class="tt-box-total"><span class="tt_txt_g">댓글</span><span class="tt_num_g">0</span></div><div class="tt-area-reply"></div><form style="margin: 0px;"><div class="tt-area-write"><div class="tt-box-thumb"><span class="tt-thumbnail" style="background-image: url(&quot;https://img1.daumcdn.net/thumb/C44x44@2x.fwebp.q85/?fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fblog%2Fadmin%2Fprofile_default_04.png&quot;);"></span></div><div class="tt_wrap_write"><div class="tt-box-account"><input maxlength="32" placeholder="이름" title="이름" type="text" value=""><input maxlength="12" placeholder="비밀번호" title="비밀번호" type="password" value=""></div><div class="tt-box-textarea"><div class="tt-inner-g"><div class="tt-cmt" contenteditable="true" data-placeholder="내용을 입력하세요."></div></div></div><div class="tt-box-write"><label class="tt-xe-label"><input id="secret" type="checkbox"><span class="tt_img_area_reply tt-xe-input-helper"></span><span class="tt-xe-label-text">비밀글</span></label><button class="tt-btn_register" disabled="" type="submit" data-tiara-action-name="댓글등록_클릭" data-tiara-custom="role=guest&amp;type=comment&amp;secret=false">등록</button></div></div></div></form></div></div>
+
+			</div>
+		</div>
+<script type="text/javascript">loadedComments[34]=true;
+findFragmentAndHighlight(34);</script>
+
+
+	
+
+                
+            
+			</div>
+
+			
+
+			
+
+			
+
+		</article>
+	</section>
+	<hr>
+	
+	<footer id="footer">
+		<p class="copyright">DESIGN BY <a href="https://achoo-ios.tistory.com/34#">TISTORY</a> <a href="https://achoo-ios.tistory.com/manage" class="admin">관리자</a></p>
+	</footer>
+</div>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/script(1).js"></script>
+
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_0" name="aswift_0" browsingtopics="true" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/ads(1).html" data-google-container-id="a!1" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true"></iframe></div></ins><div class="#menubar menu_toolbar ">
+  <h2 class="screen_out">티스토리툴바</h2>
+</div>
+<div class="#menubar menu_toolbar "></div>
+<div class="layer_tooltip">
+  <div class="inner_layer_tooltip">
+    <p class="desc_g"></p>
+  </div>
+</div>
+<div id="editEntry" style="position:absolute;width:1px;height:1px;left:-100px;top:-100px"></div>
+
+
+                <!-- DragSearchHandler - START -->
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/search_dragselection.min.js"></script>
+
+<!-- DragSearchHandler - END -->
+
+        <!-- SyntaxHighlight - START -->
+        <link href="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/atom-one-light.min.css" rel="stylesheet"><script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/highlight.min.js"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/delphi.min.js"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/php.min.js"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/python.min.js"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/r.min.js" defer=""></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/ruby.min.js"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/scala.min.js" defer=""></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/shell.min.js"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/sql.min.js"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/swift.min.js" defer=""></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/typescript.min.js" defer=""></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/vbnet.min.js" defer=""></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+        <!-- SyntaxHighlight - END -->
+
+                
+                <div style="margin:0; padding:0; border:none; background:none; float:none; clear:none; z-index:0"></div>
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/common.js"></script>
+<script type="text/javascript">window.roosevelt_params_queue = window.roosevelt_params_queue || [{channel_id: 'dk', channel_label: '{tistory}'}]</script>
+<script type="text/javascript" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/roosevelt_dk_bt.js" async="async"></script>
+
+                
+                <script>window.tiara = {"svcDomain":"user.tistory.com","section":"글뷰","trackPage":"글뷰_보기","page":"글뷰","key":"5967459-34","customProps":{"userId":"0","blogId":"5967459","entryId":"34","role":"guest","trackPage":"글뷰_보기","filterTarget":false},"entry":{"entryId":"34","entryTitle":"브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)","entryType":"POST","categoryName":"iOS","categoryId":"1068417","serviceCategoryName":"모바일","serviceCategoryId":402,"author":"5876360","authorNickname":"ACHOO!","blogNmae":"Achoo!OS","image":"kage@cZemBz/btsA5fHtTFp/1cjjKdlcFcANRLCP5UkYH1","plink":"/34","tags":[]},"kakaoAppKey":"3e6ddd834b023f24221217e370daed18","appUserId":"null"}</script>
+<script type="module" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/index(1).js"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/polyfills-legacy(1).js" nomodule="true" defer="true"></script>
+<script src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/index-legacy(1).js" nomodule="true" defer="true"></script>
+
+                
+
+<div id="__phocus__" class="__phocus__" tabindex="-1"></div><div id="shortcutLayer" class="doc_help" style="display: none;"><button class="btn_doc_close">닫기</button>
+  <h2 class="title">단축키</h2>
+  <div class="content mac_platform">
+    <div class="container">
+      <h3 class="item_title">내 블로그</h3>
+      <table class="item">
+        <tbody>
+        
+    <tr>
+      <th>내 블로그 - 관리자 홈 전환</th>
+      <td>
+        <div class="pc">
+          <kbd>Q</kbd>
+        </div>
+        <div class="mac">
+          <kbd>Q</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>새 글 쓰기</th>
+      <td>
+        <div class="pc">
+          <kbd>W</kbd>
+        </div>
+        <div class="mac">
+          <kbd>W</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        </tbody>
+      </table>
+      <h3 class="item_title">블로그 게시글</h3>
+      <table class="item">
+        <tbody>
+        
+    <tr>
+      <th>글 수정 (권한 있는 경우)</th>
+      <td>
+        <div class="pc">
+          <kbd>E</kbd>
+        </div>
+        <div class="mac">
+          <kbd>E</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>댓글 영역으로 이동</th>
+      <td>
+        <div class="pc">
+          <kbd>C</kbd>
+        </div>
+        <div class="mac">
+          <kbd>C</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        </tbody>
+      </table>
+    </div>
+    <div class="container">
+      <h3 class="item_title">모든 영역</h3>
+      <table class="item">
+        <tbody>
+        
+    <tr>
+      <th>이 페이지의 URL 복사</th>
+      <td>
+        <div class="pc">
+          <kbd>S</kbd>
+        </div>
+        <div class="mac">
+          <kbd>S</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>맨 위로 이동</th>
+      <td>
+        <div class="pc">
+          <kbd>T</kbd>
+        </div>
+        <div class="mac">
+          <kbd>T</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>티스토리 홈 이동</th>
+      <td>
+        <div class="pc">
+          <kbd>H</kbd>
+        </div>
+        <div class="mac">
+          <kbd>H</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <th>단축키 안내</th>
+      <td>
+        <div class="pc">
+          <kbd>Shift</kbd> + <kbd>/</kbd>
+        </div>
+        <div class="mac">
+          <kbd>⇧</kbd> + <kbd>/</kbd>
+        </div>
+      </td>
+    </tr>
+  
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="info">* 단축키는 한글/영문 대소문자로 이용 가능하며, 티스토리 기본 도메인에서만 동작합니다.</p>
+  </div><iframe src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/aframe.html" width="0" height="0" style="display: none;"></iframe></body><iframe id="google_esf" name="google_esf" src="./브랜칭 전략 회고(Git-flow, Github-flow, Gitlab-flow)_files/zrt_lookup_fy2021.html" style="display: none;"></iframe></html>
